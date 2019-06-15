@@ -7,14 +7,62 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00054FEB173FAC0D161A85E6 /* Pods_FinFree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF1B34AD02F5C05F27D607 /* Pods_FinFree.framework */; };
+		190F622922A18FEA00FA311B /* NewsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F622822A18FEA00FA311B /* NewsListCell.swift */; };
+		190F622E22A5994200FA311B /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F622C22A5994200FA311B /* TextFieldCell.swift */; };
+		190F622F22A5994200FA311B /* TextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 190F622D22A5994200FA311B /* TextFieldCell.xib */; };
+		190F623222A59A0600FA311B /* LabelTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F623022A59A0600FA311B /* LabelTextFieldCell.swift */; };
+		190F623322A59A0600FA311B /* LabelTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 190F623122A59A0600FA311B /* LabelTextFieldCell.xib */; };
+		190F623522A8461C00FA311B /* WatchListDetailTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F623422A8461C00FA311B /* WatchListDetailTabBar.swift */; };
+		190F623722A848FD00FA311B /* WatchListDetail2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190F623622A848FD00FA311B /* WatchListDetail2.swift */; };
+		191C33B02295F67D00AC5F59 /* NewsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191C33AF2295F67D00AC5F59 /* NewsList.swift */; };
+		191C33B22298C91A00AC5F59 /* NewsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191C33B12298C91A00AC5F59 /* NewsDetail.swift */; };
+		191C33BB22A0574200AC5F59 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191C33BA22A0574200AC5F59 /* WebKit.framework */; };
+		191C33BD22A0627700AC5F59 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191C33BC22A0627700AC5F59 /* Token.swift */; };
+		191C33BF22A07FAA00AC5F59 /* AddValueForWatchlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191C33BE22A07FAA00AC5F59 /* AddValueForWatchlist.swift */; };
 		192B73F821A9516A003CFCEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192B73F721A9516A003CFCEA /* AppDelegate.swift */; };
 		192B73FA21A9516A003CFCEA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192B73F921A9516A003CFCEA /* ViewController.swift */; };
 		192B73FD21A9516A003CFCEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 192B73FB21A9516A003CFCEA /* Main.storyboard */; };
 		192B73FF21A9516C003CFCEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192B73FE21A9516C003CFCEA /* Assets.xcassets */; };
 		192B740221A9516C003CFCEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 192B740021A9516C003CFCEA /* LaunchScreen.storyboard */; };
+		1942B70822AED08E0049C342 /* WatchListDetail1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B70722AED08E0049C342 /* WatchListDetail1.swift */; };
+		1942B71122AEDFEB0049C342 /* WatchListDetail1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B70F22AEDFEB0049C342 /* WatchListDetail1Cell.swift */; };
+		1942B71222AEDFEB0049C342 /* WatchListDetail1Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1942B71022AEDFEB0049C342 /* WatchListDetail1Cell.xib */; };
+		1942B71422AFFFF90049C342 /* Dividend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B71322AFFFF80049C342 /* Dividend.swift */; };
+		1942B71622B002330049C342 /* DividendsDetail1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B71522B002330049C342 /* DividendsDetail1.swift */; };
+		1942B71822B002440049C342 /* DividendsDetail2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B71722B002440049C342 /* DividendsDetail2.swift */; };
+		1942B71A22B002530049C342 /* DividendsDetail3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B71922B002530049C342 /* DividendsDetail3.swift */; };
+		1942B71C22B025EB0049C342 /* AddDividend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B71B22B025EB0049C342 /* AddDividend.swift */; };
+		1942B71E22B2ABFB0049C342 /* WatchListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B71D22B2ABFB0049C342 /* WatchListItem.swift */; };
+		1942B72022B328800049C342 /* HelpFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B71F22B328800049C342 /* HelpFunctions.swift */; };
+		1942B72422B56E260049C342 /* ColorTemplates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B72322B56E260049C342 /* ColorTemplates.swift */; };
+		1996776E228E043F005B7CDA /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996776D228E043F005B7CDA /* Assets.swift */; };
+		19967770228E0F08005B7CDA /* SectionAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1996776F228E0F08005B7CDA /* SectionAssets.swift */; };
+		199F2330227E40EC001550A8 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199F232F227E40EC001550A8 /* Stock.swift */; };
+		199F2332227F6841001550A8 /* DetailStock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199F2331227F6841001550A8 /* DetailStock.swift */; };
+		199F23342280C773001550A8 /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199F23332280C772001550A8 /* Calculate.swift */; };
+		19F84F6522293A0F00343773 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6422293A0F00343773 /* Portfolio.swift */; };
+		19F84F6722293E1700343773 /* StockAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6622293E1700343773 /* StockAssets.swift */; };
+		19F84F6922293EBB00343773 /* Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6822293EBB00343773 /* Performance.swift */; };
+		19F84F6B22293EC900343773 /* WatchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6A22293EC900343773 /* WatchList.swift */; };
+		19F84F6D22293EEB00343773 /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6C22293EEB00343773 /* News.swift */; };
+		19F84F6F22293F6400343773 /* Dividends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6E22293F6400343773 /* Dividends.swift */; };
+		19F84F72224E31F600343773 /* AddValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F71224E31F600343773 /* AddValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		190F622822A18FEA00FA311B /* NewsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListCell.swift; sourceTree = "<group>"; };
+		190F622C22A5994200FA311B /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
+		190F622D22A5994200FA311B /* TextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldCell.xib; sourceTree = "<group>"; };
+		190F623022A59A0600FA311B /* LabelTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextFieldCell.swift; sourceTree = "<group>"; };
+		190F623122A59A0600FA311B /* LabelTextFieldCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelTextFieldCell.xib; sourceTree = "<group>"; };
+		190F623422A8461C00FA311B /* WatchListDetailTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListDetailTabBar.swift; sourceTree = "<group>"; };
+		190F623622A848FD00FA311B /* WatchListDetail2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListDetail2.swift; sourceTree = "<group>"; };
+		191C33AF2295F67D00AC5F59 /* NewsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsList.swift; sourceTree = "<group>"; };
+		191C33B12298C91A00AC5F59 /* NewsDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetail.swift; sourceTree = "<group>"; };
+		191C33BA22A0574200AC5F59 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		191C33BC22A0627700AC5F59 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		191C33BE22A07FAA00AC5F59 /* AddValueForWatchlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddValueForWatchlist.swift; sourceTree = "<group>"; };
 		192B73F421A9516A003CFCEA /* FinFree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinFree.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		192B73F721A9516A003CFCEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		192B73F921A9516A003CFCEA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +70,32 @@
 		192B73FE21A9516C003CFCEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		192B740121A9516C003CFCEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		192B740321A9516C003CFCEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1942B70722AED08E0049C342 /* WatchListDetail1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListDetail1.swift; sourceTree = "<group>"; };
+		1942B70F22AEDFEB0049C342 /* WatchListDetail1Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListDetail1Cell.swift; sourceTree = "<group>"; };
+		1942B71022AEDFEB0049C342 /* WatchListDetail1Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WatchListDetail1Cell.xib; sourceTree = "<group>"; };
+		1942B71322AFFFF80049C342 /* Dividend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dividend.swift; sourceTree = "<group>"; };
+		1942B71522B002330049C342 /* DividendsDetail1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividendsDetail1.swift; sourceTree = "<group>"; };
+		1942B71722B002440049C342 /* DividendsDetail2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividendsDetail2.swift; sourceTree = "<group>"; };
+		1942B71922B002530049C342 /* DividendsDetail3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividendsDetail3.swift; sourceTree = "<group>"; };
+		1942B71B22B025EB0049C342 /* AddDividend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDividend.swift; sourceTree = "<group>"; };
+		1942B71D22B2ABFB0049C342 /* WatchListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListItem.swift; sourceTree = "<group>"; };
+		1942B71F22B328800049C342 /* HelpFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpFunctions.swift; sourceTree = "<group>"; };
+		1942B72322B56E260049C342 /* ColorTemplates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTemplates.swift; sourceTree = "<group>"; };
+		1996776D228E043F005B7CDA /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		1996776F228E0F08005B7CDA /* SectionAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionAssets.swift; sourceTree = "<group>"; };
+		199F232F227E40EC001550A8 /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
+		199F2331227F6841001550A8 /* DetailStock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStock.swift; sourceTree = "<group>"; };
+		199F23332280C772001550A8 /* Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculate.swift; sourceTree = "<group>"; };
+		19F84F6422293A0F00343773 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
+		19F84F6622293E1700343773 /* StockAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAssets.swift; sourceTree = "<group>"; };
+		19F84F6822293EBB00343773 /* Performance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Performance.swift; sourceTree = "<group>"; };
+		19F84F6A22293EC900343773 /* WatchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchList.swift; sourceTree = "<group>"; };
+		19F84F6C22293EEB00343773 /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		19F84F6E22293F6400343773 /* Dividends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dividends.swift; sourceTree = "<group>"; };
+		19F84F71224E31F600343773 /* AddValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddValue.swift; sourceTree = "<group>"; };
+		CEAF1B34AD02F5C05F27D607 /* Pods_FinFree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinFree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8E47D18B2DF4F76B9FC95AF /* Pods-FinFree.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinFree.debug.xcconfig"; path = "Target Support Files/Pods-FinFree/Pods-FinFree.debug.xcconfig"; sourceTree = "<group>"; };
+		E59949EDB6225C0FF598B7F7 /* Pods-FinFree.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinFree.release.xcconfig"; path = "Target Support Files/Pods-FinFree/Pods-FinFree.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +103,105 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				191C33BB22A0574200AC5F59 /* WebKit.framework in Frameworks */,
+				00054FEB173FAC0D161A85E6 /* Pods_FinFree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		191C33B3229AEBF300AC5F59 /* News */ = {
+			isa = PBXGroup;
+			children = (
+				191C33B12298C91A00AC5F59 /* NewsDetail.swift */,
+				19F84F6C22293EEB00343773 /* News.swift */,
+				191C33AF2295F67D00AC5F59 /* NewsList.swift */,
+				190F622822A18FEA00FA311B /* NewsListCell.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		191C33B4229AEC0D00AC5F59 /* Portfolio */ = {
+			isa = PBXGroup;
+			children = (
+				199F2331227F6841001550A8 /* DetailStock.swift */,
+				19F84F6422293A0F00343773 /* Portfolio.swift */,
+				19F84F71224E31F600343773 /* AddValue.swift */,
+			);
+			path = Portfolio;
+			sourceTree = "<group>";
+		};
+		191C33B5229AEC1B00AC5F59 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				19F84F6622293E1700343773 /* StockAssets.swift */,
+				1996776D228E043F005B7CDA /* Assets.swift */,
+				1996776F228E0F08005B7CDA /* SectionAssets.swift */,
+			);
+			name = Assets;
+			path = Portfolio/Assets;
+			sourceTree = "<group>";
+		};
+		191C33B6229AEC3700AC5F59 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				1942B71F22B328800049C342 /* HelpFunctions.swift */,
+				199F23332280C772001550A8 /* Calculate.swift */,
+				1942B71322AFFFF80049C342 /* Dividend.swift */,
+				199F232F227E40EC001550A8 /* Stock.swift */,
+				1942B71D22B2ABFB0049C342 /* WatchListItem.swift */,
+				191C33BC22A0627700AC5F59 /* Token.swift */,
+				190F622C22A5994200FA311B /* TextFieldCell.swift */,
+				190F622D22A5994200FA311B /* TextFieldCell.xib */,
+				190F623022A59A0600FA311B /* LabelTextFieldCell.swift */,
+				190F623122A59A0600FA311B /* LabelTextFieldCell.xib */,
+				1942B70F22AEDFEB0049C342 /* WatchListDetail1Cell.swift */,
+				1942B71022AEDFEB0049C342 /* WatchListDetail1Cell.xib */,
+				1942B72322B56E260049C342 /* ColorTemplates.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		191C33B7229AEC4C00AC5F59 /* Performance */ = {
+			isa = PBXGroup;
+			children = (
+				19F84F6822293EBB00343773 /* Performance.swift */,
+			);
+			path = Performance;
+			sourceTree = "<group>";
+		};
+		191C33B8229AEC5200AC5F59 /* Dividends */ = {
+			isa = PBXGroup;
+			children = (
+				19F84F6E22293F6400343773 /* Dividends.swift */,
+				1942B71B22B025EB0049C342 /* AddDividend.swift */,
+				1942B71522B002330049C342 /* DividendsDetail1.swift */,
+				1942B71722B002440049C342 /* DividendsDetail2.swift */,
+				1942B71922B002530049C342 /* DividendsDetail3.swift */,
+			);
+			path = Dividends;
+			sourceTree = "<group>";
+		};
+		191C33B9229AEC5900AC5F59 /* Watchlist */ = {
+			isa = PBXGroup;
+			children = (
+				19F84F6A22293EC900343773 /* WatchList.swift */,
+				191C33BE22A07FAA00AC5F59 /* AddValueForWatchlist.swift */,
+				190F623422A8461C00FA311B /* WatchListDetailTabBar.swift */,
+				190F623622A848FD00FA311B /* WatchListDetail2.swift */,
+				1942B70722AED08E0049C342 /* WatchListDetail1.swift */,
+			);
+			path = Watchlist;
+			sourceTree = "<group>";
+		};
 		192B73EB21A9516A003CFCEA = {
 			isa = PBXGroup;
 			children = (
 				192B73F621A9516A003CFCEA /* FinFree */,
 				192B73F521A9516A003CFCEA /* Products */,
+				D756938CDA0F05BA9FAC3740 /* Pods */,
+				88C8439452B20CB5CDBC2843 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +216,39 @@
 		192B73F621A9516A003CFCEA /* FinFree */ = {
 			isa = PBXGroup;
 			children = (
+				192B73FB21A9516A003CFCEA /* Main.storyboard */,
 				192B73F721A9516A003CFCEA /* AppDelegate.swift */,
 				192B73F921A9516A003CFCEA /* ViewController.swift */,
-				192B73FB21A9516A003CFCEA /* Main.storyboard */,
+				191C33B5229AEC1B00AC5F59 /* Assets */,
+				191C33B4229AEC0D00AC5F59 /* Portfolio */,
+				191C33B7229AEC4C00AC5F59 /* Performance */,
+				191C33B8229AEC5200AC5F59 /* Dividends */,
+				191C33B3229AEBF300AC5F59 /* News */,
+				191C33B9229AEC5900AC5F59 /* Watchlist */,
+				191C33B6229AEC3700AC5F59 /* Helper */,
 				192B73FE21A9516C003CFCEA /* Assets.xcassets */,
 				192B740021A9516C003CFCEA /* LaunchScreen.storyboard */,
 				192B740321A9516C003CFCEA /* Info.plist */,
 			);
 			path = FinFree;
+			sourceTree = "<group>";
+		};
+		88C8439452B20CB5CDBC2843 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				191C33BA22A0574200AC5F59 /* WebKit.framework */,
+				CEAF1B34AD02F5C05F27D607 /* Pods_FinFree.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D756938CDA0F05BA9FAC3740 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D8E47D18B2DF4F76B9FC95AF /* Pods-FinFree.debug.xcconfig */,
+				E59949EDB6225C0FF598B7F7 /* Pods-FinFree.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +258,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 192B740621A9516C003CFCEA /* Build configuration list for PBXNativeTarget "FinFree" */;
 			buildPhases = (
+				0739831B7732A59347893BC9 /* [CP] Check Pods Manifest.lock */,
 				192B73F021A9516A003CFCEA /* Sources */,
 				192B73F121A9516A003CFCEA /* Frameworks */,
 				192B73F221A9516A003CFCEA /* Resources */,
+				0D7D707BAA493E5D02DF3376 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,6 +285,7 @@
 				TargetAttributes = {
 					192B73F321A9516A003CFCEA = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -122,21 +312,102 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1942B71222AEDFEB0049C342 /* WatchListDetail1Cell.xib in Resources */,
 				192B740221A9516C003CFCEA /* LaunchScreen.storyboard in Resources */,
 				192B73FF21A9516C003CFCEA /* Assets.xcassets in Resources */,
 				192B73FD21A9516A003CFCEA /* Main.storyboard in Resources */,
+				190F623322A59A0600FA311B /* LabelTextFieldCell.xib in Resources */,
+				190F622F22A5994200FA311B /* TextFieldCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0739831B7732A59347893BC9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FinFree-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0D7D707BAA493E5D02DF3376 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FinFree/Pods-FinFree-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FinFree/Pods-FinFree-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		192B73F021A9516A003CFCEA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1942B70822AED08E0049C342 /* WatchListDetail1.swift in Sources */,
+				199F23342280C773001550A8 /* Calculate.swift in Sources */,
+				19F84F6B22293EC900343773 /* WatchList.swift in Sources */,
+				1942B71A22B002530049C342 /* DividendsDetail3.swift in Sources */,
+				199F2332227F6841001550A8 /* DetailStock.swift in Sources */,
+				19F84F6522293A0F00343773 /* Portfolio.swift in Sources */,
+				19F84F6922293EBB00343773 /* Performance.swift in Sources */,
 				192B73FA21A9516A003CFCEA /* ViewController.swift in Sources */,
+				191C33B02295F67D00AC5F59 /* NewsList.swift in Sources */,
+				19F84F6F22293F6400343773 /* Dividends.swift in Sources */,
+				1942B71122AEDFEB0049C342 /* WatchListDetail1Cell.swift in Sources */,
+				19F84F6D22293EEB00343773 /* News.swift in Sources */,
+				1942B71C22B025EB0049C342 /* AddDividend.swift in Sources */,
+				19967770228E0F08005B7CDA /* SectionAssets.swift in Sources */,
+				1996776E228E043F005B7CDA /* Assets.swift in Sources */,
+				191C33B22298C91A00AC5F59 /* NewsDetail.swift in Sources */,
+				1942B72022B328800049C342 /* HelpFunctions.swift in Sources */,
+				19F84F72224E31F600343773 /* AddValue.swift in Sources */,
+				191C33BF22A07FAA00AC5F59 /* AddValueForWatchlist.swift in Sources */,
+				1942B71822B002440049C342 /* DividendsDetail2.swift in Sources */,
+				190F623222A59A0600FA311B /* LabelTextFieldCell.swift in Sources */,
+				1942B72422B56E260049C342 /* ColorTemplates.swift in Sources */,
+				19F84F6722293E1700343773 /* StockAssets.swift in Sources */,
+				190F622922A18FEA00FA311B /* NewsListCell.swift in Sources */,
+				1942B71622B002330049C342 /* DividendsDetail1.swift in Sources */,
+				199F2330227E40EC001550A8 /* Stock.swift in Sources */,
+				191C33BD22A0627700AC5F59 /* Token.swift in Sources */,
 				192B73F821A9516A003CFCEA /* AppDelegate.swift in Sources */,
+				1942B71422AFFFF90049C342 /* Dividend.swift in Sources */,
+				190F623722A848FD00FA311B /* WatchListDetail2.swift in Sources */,
+				190F623522A8461C00FA311B /* WatchListDetailTabBar.swift in Sources */,
+				1942B71E22B2ABFB0049C342 /* WatchListItem.swift in Sources */,
+				190F622E22A5994200FA311B /* TextFieldCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,36 +551,44 @@
 		};
 		192B740721A9516C003CFCEA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D8E47D18B2DF4F76B9FC95AF /* Pods-FinFree.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QF753U2942;
 				INFOPLIST_FILE = FinFree/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.bkaczmar.FinFree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		192B740821A9516C003CFCEA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E59949EDB6225C0FF598B7F7 /* Pods-FinFree.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QF753U2942;
 				INFOPLIST_FILE = FinFree/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = de.bkaczmar.FinFree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
