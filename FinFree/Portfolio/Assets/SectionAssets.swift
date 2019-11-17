@@ -28,14 +28,15 @@ class SectionAssets: UIViewController {
         
         setupView()
         
-        stockNameArray = defaults.stringArray(forKey: "portfolioValuesNames")
+        stockNameArray = defaults.stringArray(forKey: "portfolioValuesNames1")
         if stockNameArray != nil {
             for stock in stockNameArray! {
                 let decoded  = defaults.data(forKey: stock)
                 if decoded != nil {
-                    let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Stock
-                    totalPrices.append(decodedStock.totalPrice)
-                    sectorNames.append(decodedStock.sector)
+                    let decodedStock = helperFunc.decodeStockObject(fromData: decoded!)
+                    //let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Stock
+                    totalPrices.append(decodedStock!.totalPrice)
+                    sectorNames.append(decodedStock!.sector)
                 }
             }
         }
@@ -54,16 +55,17 @@ class SectionAssets: UIViewController {
         let chartDataSet = PieChartDataSet(entries: chartDataEntries, label: nil)
         let chartData = PieChartData(dataSet: chartDataSet)
         
-        let colors = [UIColor.magenta,
-                      UIColor.cyan,
-                      UIColor.gray]
+        let colors = [UIColor(red: 51/255, green: 181/255, blue: 299/255, alpha: 1),
+                      UIColor(red: 299/255, green: 181/255, blue: 51/255, alpha: 1),
+                      UIColor(red: 181/255, green: 51/255, blue: 299/255, alpha: 1)]
         chartDataSet.colors = colors as [NSUIColor]
         
         pieChartView.data = chartData
         
-//        pieChartView.backgroundColor = UIColor.red
+        pieChartView.animate(xAxisDuration: 1.4, yAxisDuration: 1.4)
         
-        // Do any additional setup after loading the view.
+        pieChartView.centerText = "Allocation by Sector"
+        
     }
     
     func setupView(){

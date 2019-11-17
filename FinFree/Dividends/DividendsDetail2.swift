@@ -40,9 +40,10 @@ class DividendsDetail2: UIViewController {
             for divName in dividendNameArray! {
                 let decoded  = userDefaults.data(forKey: divName)
                 if decoded != nil {
-                    let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
-                    totalPrices.append(decodedDividend.totalPrice)
-                    companyNames.append(decodedDividend.companyName)
+                    let decodedDividend = helperFunc.decodeDividendObject(fromData: decoded!)
+                    //let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
+                    totalPrices.append(decodedDividend!.totalPrice)
+                    companyNames.append(decodedDividend!.companyName)
                 }
             }
         }

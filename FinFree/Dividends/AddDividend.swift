@@ -52,35 +52,26 @@ class AddDividend: UITableViewController {
         
         if savingSuccesful == true {
             
-            let dividendObject = Dividend(companyName: companyName, dividend: dividend, fees: fees, taxes: taxes, date: date, totalPrice: totalPrice)
+            let dividendObject = Dividend(companyName: companyName,
+                                          dividend: dividend,
+                                          fees: fees,
+                                          taxes: taxes,
+                                          date: date,
+                                          totalPrice: totalPrice)
             
             let date = Date()
             
             savingName = companyName + "@" + "\(date)"
-            print("SavingName: "  + savingName)
             
-            print("Date is: " + "\(date)")
-            
-            let userDefaults = UserDefaults.standard
             var encodedData = Data()
             do {
                 encodedData = try NSKeyedArchiver.archivedData(withRootObject: dividendObject, requiringSecureCoding: false)
-                userDefaults.set(encodedData, forKey: savingName)
-                userDefaults.synchronize()
             }
             catch {
                 print("ERROR! " + "\(error)")
             }
             
-            
-            dividendNameArray = userDefaults.stringArray(forKey: "dividendArrayNew")
-            if (dividendNameArray == nil) {
-                dividendNameArray = []
-            }
-            
-            dividendNameArray!.append(savingName)
-            userDefaults.set(dividendNameArray!, forKey: "dividendArrayNew")
-            
+            helperFunc.saveData(data: encodedData, atKey: savingName, atArray: "dividendArrayNew")
             
             // let add-view disappear
             helperFunc.letViewDisappear(navController: self.navigationController)
@@ -102,6 +93,7 @@ class AddDividend: UITableViewController {
         
         if(indexPath.row == 0){
             let textFieldCell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
+            textFieldCell.textFieldCell.text = ""
             textFieldCell.textFieldCell.placeholder = criterias[indexPath.row]
             return textFieldCell
         } else if(indexPath.row == 2) {

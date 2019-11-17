@@ -32,6 +32,25 @@ class Calculation {
         }
     }
     
+    func changeInPercentageAsDouble(purchasePrice: Double, currentPrice: Double) -> Double {
+        let absoluteChange = currentPrice / purchasePrice
+        
+        if (absoluteChange > 1) {
+            let absoluteChangeMinusOne = absoluteChange - 1
+            let absoluteChangeinPercentage = absoluteChangeMinusOne * 100
+            let absoluteChangeRounded = (absoluteChangeinPercentage*100).rounded()/100
+            return absoluteChangeRounded
+        } else if (absoluteChange < 1) {
+            let absoluteChangeMinusOne = 1 - absoluteChange
+            let absoluteChangeinPercentage = absoluteChangeMinusOne * 100
+            let absoluteChangeRounded = ((absoluteChangeinPercentage*100).rounded()/100) * -1
+            return absoluteChangeRounded
+        } else {
+            let absoluteChangeinPercentageAsDouble =  0.00
+            return absoluteChangeinPercentageAsDouble
+        }
+    }
+    
     func formatPoints(num: String) ->String{
         if let numAsDouble = Double(num) {
         let thousandNum = numAsDouble/1000
@@ -61,6 +80,19 @@ class Calculation {
             }
             return ("\(numAsDouble)")
         }
+        } else {
+            return num
+        }
+        
+    }
+    
+    func roundDividendYield(num: String) ->String {
+        
+        if let numAsDouble = Double(num) {
+            let numPercentage = numAsDouble * 100
+            let numRounded = round(1000 * numPercentage) / 1000
+            let numAsString = "\(numRounded)"
+            return numAsString
         } else {
             return num
         }

@@ -13,16 +13,18 @@ class Assets: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Asset Allocation"
+        
         let stockAssetsVC = StockAssets()
-        stockAssetsVC.tabBarItem = UITabBarItem(tabBarSystemItem: .recents, tag: 0)
-        stockAssetsVC.title = "Allocation"
+        let stockAssetsBarItem = UITabBarItem(title: "Stocks", image: UIImage(named: "StockAssetsIcon"), selectedImage: UIImage(named: "StockAssetsIcon"))
+        stockAssetsVC.tabBarItem = stockAssetsBarItem
+        
         let sectionAssetsVC = SectionAssets()
-        //        watchList2!.view.backgroundColor = UIColor.red
-        sectionAssetsVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        sectionAssetsVC.title = "Allocation"
+        let sectionAssetsBarItem = UITabBarItem(title: "Sectors", image: UIImage(named: "StockAssetsIcon"), selectedImage: UIImage(named: "StockAssetsIcon"))
+        sectionAssetsVC.tabBarItem = sectionAssetsBarItem
+        
         let tabBarlist = [stockAssetsVC,sectionAssetsVC]
         viewControllers = tabBarlist
-        // Do any additional setup after loading the view.
     }
 
 }

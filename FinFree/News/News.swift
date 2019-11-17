@@ -12,6 +12,7 @@ class News: UITableViewController {
     
     var stockNameArray : [String]? = nil
     var defaults : UserDefaults? = nil
+    var helpFunc = HelpFunctions()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,7 @@ class News: UITableViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
         defaults = UserDefaults.standard
-        stockNameArray = defaults!.stringArray(forKey: "stockNameArray")
+        stockNameArray = defaults!.stringArray(forKey: "portfolioValuesNames1")
         
         self.tableView.reloadData()
         
@@ -52,8 +53,8 @@ class News: UITableViewController {
             let stockName = stockNameArray![indexPath.row]
             let userDefaults = UserDefaults.standard
             let decoded  = userDefaults.data(forKey: stockName)
-            let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Stock
-            cell.textLabel?.text = decodedStock.companyName
+            let decodedStock = helpFunc.decodeStockObject(fromData: decoded!)
+            cell.textLabel?.text = decodedStock!.companyName
             cell.accessoryType = .disclosureIndicator
             return cell
         } else {
@@ -79,7 +80,12 @@ class News: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let destVC = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "NewsList") as! NewsList
-        destVC.choosenStock = stockNameArray![indexPath.row]
+        let stockName = stockNameArray![indexPath.row]
+        let userDefaults = UserDefaults.standard
+        let decoded  = userDefaults.data(forKey: stockName)
+        let decodedStock = helpFunc.decodeStockObject(fromData: decoded!)
+        destVC.choosenStock = decodedStock!.symbol
+        //print(stockNameArray![indexPath.row])
         destVC.title = tableView.cellForRow(at: indexPath)?.textLabel?.text
         self.navigationController?.pushViewController(destVC, animated: true)
         

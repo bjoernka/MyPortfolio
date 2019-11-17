@@ -48,7 +48,6 @@ class DividendsDetail1: UIViewController {
     
     func setupChart() {
         
-        
         dividendNameArray = userDefaults.stringArray(forKey: "dividendArrayNew")
         if dividendNameArray != nil {
             createEntries(divArry: dividendNameArray!)
@@ -90,6 +89,7 @@ class DividendsDetail1: UIViewController {
         allDivDates = []
         allDivNames = []
         allDivValues = []
+        allDividends = []
         DatesAndValues = [:]
         keysAsArray = []
         counter = 0
@@ -97,8 +97,9 @@ class DividendsDetail1: UIViewController {
         for divName in divArry {
             let decoded  = userDefaults.data(forKey: divName)
             if decoded != nil {
-                let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
-                allDividends.append(decodedDividend)
+                let decodedDividend = helperFunc.decodeDividendObject(fromData: decoded!)
+                //let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
+                allDividends.append(decodedDividend!)
             }
         }
         
@@ -138,7 +139,6 @@ class DividendsDetail1: UIViewController {
 
         
         barCharView.rightAxis.enabled = false
-        //axisFormatDelegate = self
 
         
         for key in keys {

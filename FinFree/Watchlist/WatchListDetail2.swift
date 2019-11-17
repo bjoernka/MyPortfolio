@@ -24,6 +24,7 @@ class WatchListDetail2: UIViewController, ChartViewDelegate {
     var dataEntries: [ChartDataEntry] = []
     var lineChart = LineChartView()
     var token = Token()
+    var selectedStock = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,10 @@ class WatchListDetail2: UIViewController, ChartViewDelegate {
         view.backgroundColor = UIColor.white
         
     }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        self.tableView.reloadData()
+//    }
     
     @objc func onAdd(_ sender : AnyObject?) {
         
@@ -68,7 +73,10 @@ class WatchListDetail2: UIViewController, ChartViewDelegate {
         datesArray = []
         dataEntries = []
         
-        let urlString = token.testURL(symbol: "aapl", info: "/chart/" + time)
+        print(selectedStock)
+        
+        let urlString = token.testURL(symbol: selectedStock, info: "/chart/" + time)
+        print(urlString)
         
         guard let url = URL(string: urlString) else {
             return
@@ -108,12 +116,10 @@ class WatchListDetail2: UIViewController, ChartViewDelegate {
                     print("The error is:")
                     print(error)
                 }
-                
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.isHidden = true
             }
             }.resume()
-        
     }
     
     func convertStringToDate(dates: [String]) {

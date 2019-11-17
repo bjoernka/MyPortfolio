@@ -8,12 +8,19 @@
 
 import UIKit
 
-class Performance: UIViewController {
+class Performance: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let vc1 = PerformanceChart()
+        let vc1BarItem = UITabBarItem(title: "Per Month", image: UIImage(named: "MonthDividends"), selectedImage: UIImage(named: "MonthDividends"))
+        vc1.tabBarItem = vc1BarItem
+        let vc2 = PerformanceDetail()
+        let vc2BarItem = UITabBarItem(title: "Per Company", image: UIImage(named: "StockAssetsIcon"), selectedImage: UIImage(named: "StockAssetsIcon"))
+        vc2.tabBarItem = vc2BarItem
+        let tabBarlist = [vc1,vc2]
+        viewControllers = tabBarlist
     }
     
     /*

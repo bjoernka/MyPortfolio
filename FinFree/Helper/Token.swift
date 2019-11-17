@@ -11,7 +11,7 @@ import Foundation
 public class Token {
     
     static let newToken = "pk_0edeb80249f64c679daefb77e6b576f4"
-    static let testToken = "Tpk_0929897a70334ba0b67d963c8ff14ca0"
+    static let testToken = "Tpk_c366887be8a34fab99b498aeab58c55e"
     
     func testURL(symbol: String, info: String) -> String {
         

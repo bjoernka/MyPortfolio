@@ -10,32 +10,29 @@ import UIKit
 
 class WatchListDetailTabBar: UITabBarController {
 
-    var selectedStock: String = ""
+    var selectedStock = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        print("Selected: " + selectedStock)
         
-        let watchList1 = WatchListDetail1()
-        watchList1.tabBarItem = UITabBarItem(tabBarSystemItem: .recents, tag: 0)
-        let watchList2 = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "watchListDetail2") as? WatchListDetail2
-        watchList2!.stock = selectedStock
-//        watchList2!.view.backgroundColor = UIColor.red
-        watchList2!.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        let tabBarlist = [watchList1,watchList2!]
-        viewControllers = tabBarlist
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        print("Selected: " + selectedStock)
+        let watchList1 = WatchListDetail1()
+        let watchList1BarItem = UITabBarItem(title: "Info", image: UIImage(named: "BookIcon"), selectedImage: UIImage(named: "BookIcon"))
+        watchList1.tabBarItem = watchList1BarItem
+        watchList1.selectedStock = selectedStock
+        let watchList2 = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "watchListDetail2") as? WatchListDetail2
+        watchList2!.stock = selectedStock
+        //        watchList2!.view.backgroundColor = UIColor.red
+        let watchList2BarItem = UITabBarItem(title: "Graph", image: UIImage(named: "HistoricGraphIcon"), selectedImage: UIImage(named: "HistoricGraphIcon"))
+        watchList2!.tabBarItem = watchList2BarItem
+        watchList2!.selectedStock = selectedStock
+        let tabBarlist = [watchList1,watchList2!]
+        viewControllers = tabBarlist
     }
-    */
-
 }

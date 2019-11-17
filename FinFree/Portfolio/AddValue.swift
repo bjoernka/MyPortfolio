@@ -12,7 +12,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
 
     var helpFunc = HelpFunctions()
     var stockNameArray: [String]? = []
-    var criterias = ["Symbol", "Name of the company", "Sector", "Current Price", "Amount", "Date", "Taxes", "Fess", "Total Price"]
+    var criterias = ["Symbol", "Name of the company", "Sector", "Current Price", "Amount", "Taxes", "Fess", "Date",  "Total Price"]
     var symbol = ""
     var companyName = ""
     var sector = ""
@@ -34,11 +34,12 @@ class AddValue: UITableViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView()
+        
+        self.tableView.separatorStyle = .none
 
         self.view.backgroundColor = UIColor.white
         
         setUIBarButtons()
-//        showDatePicker()
         
     }
     
@@ -51,25 +52,19 @@ class AddValue: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        doubleValues = [0.0, 0.0, 0.0, currentPrice,amount,0.0, taxes,fees]
+        doubleValues = [0.0, 0.0, 0.0, currentPrice,amount, taxes,fees, 0.0,]
         
         if(indexPath.row == 0){
-            let textFieldCell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
-            textFieldCell.textFieldCell.placeholder = criterias[indexPath.row]
-            textFieldCell.textFieldCell.text = symbol
-            textFieldCell.textFieldCell.delegate = self
-            return textFieldCell
+            let cell = helpFunc.createTextFieldCell(textString: symbol, placeholderString: criterias[indexPath.row])
+            cell.textFieldCell.delegate = self
+            return cell
         } else if(indexPath.row == 1){
-            let textFieldCell = Bundle.main.loadNibNamed("WatchListDetail1Cell", owner: self, options: nil)?.first as! WatchListDetail1Cell
-            textFieldCell.leftLabel.text = criterias[indexPath.row]
-            textFieldCell.rightLabel.text = companyName
-            return textFieldCell
+            let cell = helpFunc.createWatchListCell(leftlabel: criterias[indexPath.row], rightlabel: companyName)
+            return cell
         } else if(indexPath.row == 2){
-            let textFieldCell = Bundle.main.loadNibNamed("WatchListDetail1Cell", owner: self, options: nil)?.first as! WatchListDetail1Cell
-            textFieldCell.leftLabel.text = criterias[indexPath.row]
-            textFieldCell.rightLabel.text = sector
-            return textFieldCell
-        } else if(indexPath.row == 5) {
+            let cell = helpFunc.createWatchListCell(leftlabel: criterias[indexPath.row], rightlabel: sector)
+            return cell
+        } else if(indexPath.row == 7) {
             let labelFieldCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
             datePicker.datePickerMode = .date
             let toolbar = UIToolbar();
@@ -85,19 +80,21 @@ class AddValue: UITableViewController, UITextFieldDelegate {
             labelFieldCell.labelTextField.text = formatter.string(from: datePicker.date)
             labelFieldCell.labelString.text = criterias[indexPath.row]
             return labelFieldCell
-        } else if(indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 6 || indexPath.row == 7){
+        } else if(indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 5 || indexPath.row == 6){
             let labelFieldCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
             labelFieldCell.labelString.text = criterias[indexPath.row]
             labelFieldCell.labelTextField.text = "\(doubleValues[indexPath.row])"
             labelFieldCell.labelTextField.addTarget(self, action: #selector(self.updateTotalPrice(_:)), for: .editingDidEnd)
             return labelFieldCell
         } else {
-            let textFieldCell = Bundle.main.loadNibNamed("WatchListDetail1Cell", owner: self, options: nil)?.first as! WatchListDetail1Cell
-            textFieldCell.leftLabel.text = criterias[indexPath.row]
-            textFieldCell.rightLabel.text = "\(totalPrice)"
-            return textFieldCell
+            let cell = helpFunc.createWatchListCell(leftlabel: criterias[indexPath.row], rightlabel: "\(totalPrice)")
+            return cell
         }
         
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
     func setUIBarButtons() {
@@ -114,6 +111,10 @@ class AddValue: UITableViewController, UITextFieldDelegate {
     
     @objc func onSaved (_ sender : AnyObject?){
         
+        saveData()
+        
+        if savingSuccesful == true {
+        
         let stock = Stock(symbol: symbol,
                           companyName: companyName,
                           sector: sector,
@@ -124,7 +125,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
                           date: date,
                           totalPrice: totalPrice)
         
-        let name = symbol
+        let name = symbol + "Portfolio"
         
         var encodedData = Data()
         do {
@@ -133,26 +134,14 @@ class AddValue: UITableViewController, UITextFieldDelegate {
             catch {
             print("ERROR! " + "\(error)")
         }
-        if name != nil {
-            userDefaults.set(encodedData, forKey: name)
-            userDefaults.synchronize()
-        }
-        
-        
-        let defaults = UserDefaults.standard
-        stockNameArray = defaults.stringArray(forKey: "portfolioValuesNames")
-        if (stockNameArray == nil) {
-            stockNameArray = []
-        }
+            
+        helperFunc.saveData(data: encodedData, atKey: name, atArray: "portfolioValuesNames1")
 
-        if (name != nil) {
-            stockNameArray?.append(name)
-            print(stockNameArray!)
-            defaults.set(stockNameArray, forKey: "portfolioValuesNames")
-        }
-        
         // let add-view disappear
         helpFunc.letViewDisappear(navController: self.navigationController)
+        } else {
+            
+        }
     }
     
     @objc func textFieldDidEndEditing(_ textField: UITextField) {
@@ -191,9 +180,6 @@ class AddValue: UITableViewController, UITextFieldDelegate {
                         if let sectorString = dictionary["sector"] as? String {
                             self.sector = sectorString
                         }   
-//                        if let latestPrice = dictionary["close"] as? Double {
-//                            self.currentPrice = latestPrice
-//                        }
                     }
                 } catch {
                     print("The error is:")
@@ -266,9 +252,35 @@ class AddValue: UITableViewController, UITextFieldDelegate {
             }
         }
         
-        if let sixthCell = self.tableView.cellForRow(at: IndexPath(row: 5, section: 0)) as? LabelTextFieldCell{
-            if let dateConv = helperFunc.checkIfCellValueIsDate(
+        if let sixthCell = self.tableView.cellForRow(at: IndexPath(row: 5, section: 0)) as? LabelTextFieldCell {
+            if let taxesCell = helperFunc.checkIfCellValueIsDouble(
                 textFieldValue: sixthCell.labelTextField.text!,
+                errorTitle: "Fees not valid",
+                errorMessage: "Please enter a valid fee",
+                vc: self) {
+                taxes = taxesCell
+                savingSuccesful = true
+            } else {
+                savingSuccesful = false
+            }
+        }
+        
+        if let seventhCell = self.tableView.cellForRow(at: IndexPath(row: 6, section: 0)) as? LabelTextFieldCell {
+            if let feeCell = helperFunc.checkIfCellValueIsDouble(
+                textFieldValue: seventhCell.labelTextField.text!,
+                errorTitle: "Taxes not valid",
+                errorMessage: "Please enter a valid tax",
+                vc: self) {
+                fees = feeCell
+                savingSuccesful = true
+            } else {
+                savingSuccesful = false
+            }
+        }
+        
+        if let eigthCell = self.tableView.cellForRow(at: IndexPath(row: 7, section: 0)) as? LabelTextFieldCell{
+            if let dateConv = helperFunc.checkIfCellValueIsDate(
+                textFieldValue: eigthCell.labelTextField.text!,
                 errorTitle: "Date not valid",
                 errorMessage: "Please enter a valid date",
                 vc: self) {
@@ -278,52 +290,8 @@ class AddValue: UITableViewController, UITextFieldDelegate {
                 savingSuccesful = false
             }
         }
-        
-        if let seventhCell = self.tableView.cellForRow(at: IndexPath(row: 6, section: 0)) as? LabelTextFieldCell {
-            if let taxesCell = helperFunc.checkIfCellValueIsDouble(
-                textFieldValue: seventhCell.labelTextField.text!,
-                errorTitle: "Taxes not valid",
-                errorMessage: "Please enter a valid tax",
-                vc: self) {
-                taxes = taxesCell
-                savingSuccesful = true
-            } else {
-                savingSuccesful = false
-            }
-        }
-        
-        if let eigthCell = self.tableView.cellForRow(at: IndexPath(row: 7, section: 0)) as? LabelTextFieldCell {
-            if let feeCell = helperFunc.checkIfCellValueIsDouble(
-                textFieldValue: eigthCell.labelTextField.text!,
-                errorTitle: "Fees not valid",
-                errorMessage: "Please enter a valid fee",
-                vc: self) {
-                fees = feeCell
-                savingSuccesful = true
-            } else {
-                savingSuccesful = false
-            }
-        }
     }
-    
-//    func showDatePicker(){
-//        //Formate Date
-//        datePicker.datePickerMode = .date
-//
-//        //ToolBar
-//        let toolbar = UIToolbar();
-//        toolbar.sizeToFit()
-//        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
-//        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-//        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
-//
-//        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
-//
-//        dateTextField.inputAccessoryView = toolbar
-//        dateTextField.inputView = datePicker
-//
-//    }
-    
+
     @objc func donedatePicker(){
         
         self.tableView.reloadData()

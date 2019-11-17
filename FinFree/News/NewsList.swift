@@ -141,13 +141,14 @@ class NewsList: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellStory = tableView.dequeueReusableCell(withIdentifier: "cellStory", for: indexPath) as! NewsListCell
-
+        //let cellStory = tableView.dequeueReusableCell(withIdentifier: "cellStory", for: indexPath) as! NewsListCell
+        let cellStory = Bundle.main.loadNibNamed("ImageLabelCell", owner: self, options: nil)?.first as! ImageLabelCell
+        
         print("Cell refreshed!!")
         
         if headlines.count > 0 {
-            cellStory.cellLabel.text = headlines[indexPath.row]
-            cellStory.cellLabel.numberOfLines = 0
+            cellStory.label.text = headlines[indexPath.row]
+            cellStory.label.numberOfLines = 0
             DispatchQueue.global(qos: .background).async {
                 let url = URL(string:self.imageUrl[indexPath.row])
                 print("Url ist : " + "\(String(describing: url))")
@@ -161,12 +162,12 @@ class NewsList: UITableViewController {
                 }
                 DispatchQueue.main.async {
                     self.imageCache.setObject(self.image, forKey: NSString(string:        self.imageUrl[indexPath.row]))
-                    cellStory.cellImageView.image = self.image
+                    cellStory.imageViewCell.image = self.image
                     
                 }
             }
         } else {
-            cellStory.cellLabel.text = "No news found"
+            cellStory.label.text = "No news found"
         }
 
         return cellStory
@@ -175,7 +176,7 @@ class NewsList: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if headlines.count > 0 {
-            let destVC = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "webView") as! NewsDetail
+            let destVC = NewsDetail()
             destVC.urlAsString = url[indexPath.row]
             self.navigationController?.pushViewController(destVC, animated: true)
         } else {

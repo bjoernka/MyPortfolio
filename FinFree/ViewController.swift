@@ -37,8 +37,7 @@ class ViewController: UIViewController {
         preparations()
         
     }   
-    
-    
+        
     // Set text on Labels
     func preparations() {
         
@@ -58,6 +57,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // Make navigationbar transparent and add title
+        self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationItem.title = "Portfolio"
     }
@@ -67,7 +67,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func assetsClicked(_ sender: UIButton) {
-//        let destVC = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "AssetAllocation") as? Assets
         self.navigationController?.pushViewController(Assets(), animated: true)
     }
     
@@ -85,6 +84,10 @@ class ViewController: UIViewController {
     
     @IBAction func settingsClicked(_ sender: UIButton) {
         self.navigationController?.pushViewController(News(), animated: true)
+    }
+    
+    @IBAction func addButtonClicked(_ sender: UIBarButtonItem) {
+        self.navigationController?.pushViewController(AddValue(), animated: true)
     }
     
 }

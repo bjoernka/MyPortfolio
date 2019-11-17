@@ -12,6 +12,8 @@ class WatchList: UITableViewController {
 
     var watchListStocks: [String] = []
     var watchListStocksNames: [String] = []
+    var watchListStocksSymbols: [String] = []
+    let helpFunc = HelpFunctions()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,18 +28,24 @@ class WatchList: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        self.navigationController?.navigationBar.isTranslucent = false
+        
         watchListStocksNames = []
+        watchListStocksSymbols = []
         
         let defaults = UserDefaults.standard
-        let watchListStocksDefault = defaults.stringArray(forKey: "watchListArrayNew")
+        let watchListStocksDefault = defaults.stringArray(forKey: "watchListArrayNew1")
         if (watchListStocksDefault == nil) {
-            watchListStocks = ["No Stocks in Watchlist"]
+            watchListStocksNames = ["No Stocks in Watchlist"]
         } else {
-            watchListStocks = defaults.stringArray(forKey: "watchListArrayNew")!
+            watchListStocks = defaults.stringArray(forKey: "watchListArrayNew1")!
             for watchListStock in watchListStocks {
                 let decoded  = defaults.data(forKey: watchListStock)
-                let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! WatchListItem
-                watchListStocksNames.append(decodedStock.companyName)
+                let decodedStock = helpFunc.decodeWatchListObject(fromData: decoded!)
+                //let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! WatchListItem
+                print(decodedStock!.companyName)
+                watchListStocksNames.append(decodedStock!.companyName)
+                watchListStocksSymbols.append(decodedStock!.symbol)
             }
         }
         
@@ -62,13 +70,14 @@ class WatchList: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let destVC = WatchListDetailTabBar()
-        destVC.selectedStock = watchListStocks[indexPath.row]
+        print(watchListStocksSymbols[indexPath.row])
+        destVC.selectedStock = watchListStocksSymbols[indexPath.row]
         self.navigationController?.pushViewController(destVC, animated: true)
         
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return watchListStocks.count
+        return watchListStocksNames.count
     }
     
     // Gets called everytime the user wants too add a stock

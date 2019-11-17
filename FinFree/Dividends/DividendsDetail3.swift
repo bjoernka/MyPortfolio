@@ -13,6 +13,7 @@ class DividendsDetail3: UITableViewController {
     let userDefaults = UserDefaults.standard
     var dividendNameArray: [String]? = ["No saved Data"]
     var allDividends: [Dividend] = []
+    let helpFunc = HelpFunctions()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +29,9 @@ class DividendsDetail3: UITableViewController {
             for divName in dividendNameArray! {
                 let decoded  = userDefaults.data(forKey: divName)
                 if decoded != nil {
-                    let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
-                    allDividends.append(decodedDividend)
+                    let decodedDividend = helpFunc.decodeDividendObject(fromData: decoded!)
+                    //let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
+                    allDividends.append(decodedDividend!)
                 }
             }
         }

@@ -13,6 +13,7 @@ class Portfolio: UITableViewController {
     var defaults = UserDefaults.standard
     // Array for names that need to show up in the tableview
     var stockNameArray : [String]? = ["No saved values."]
+    var helpFunc = HelpFunctions()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class Portfolio: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
-        stockNameArray = defaults.stringArray(forKey: "portfolioValuesNames")
+        stockNameArray = defaults.stringArray(forKey: "portfolioValuesNames1")
         if stockNameArray == nil {
             stockNameArray = ["No saved values."]
         }
@@ -52,8 +53,8 @@ class Portfolio: UITableViewController {
         if decoded == nil {
             cell.textLabel?.text = stockNameArray![indexPath.row]
         } else {
-            let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Stock
-            cell.textLabel?.text = decodedStock.companyName
+            let decodedStock = helpFunc.decodeStockObject(fromData: decoded!)
+            cell.textLabel?.text = decodedStock!.companyName
             cell.accessoryType = .disclosureIndicator
         }
         return cell

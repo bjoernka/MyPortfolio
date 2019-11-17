@@ -11,23 +11,19 @@ import WebKit
 
 class NewsDetail: UIViewController, WKNavigationDelegate  {
 
-    @IBOutlet weak var webView: WKWebView!
+    var webView = WKWebView()
     
     var urlAsString: String = ""
-    
-//    override func loadView() {
-//        webView = WKWebView()
-//        webView.navigationDelegate = self
-//        view = webView
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupView()
+        
         // 1
         let url = URL(string: urlAsString)!
         webView.load(URLRequest(url: url))
-        
+
 //
 //        // 2
 //        let refresh = UIBarButtonItem(barButtonSystemItem: .refresh, target: webView, action: #selector(webView.reload))
@@ -41,6 +37,17 @@ class NewsDetail: UIViewController, WKNavigationDelegate  {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isTranslucent = false
+    }
+    
+    func setupView() {
+        
+        self.view.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        webView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        webView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
     }
     
 }

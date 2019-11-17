@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class HelpFunctions {
+class HelpFunctions: NSObject {
     
     func checkIfCellValueIsDouble(textFieldValue: String, errorTitle: String, errorMessage: String, vc: UIViewController) -> Double? {
     
@@ -65,5 +65,87 @@ class HelpFunctions {
         }
         
         return returnDictionary
+    }
+    
+    func createDateCell(label: String, doneButton: UIBarButtonItem, cancelButton: UIBarButtonItem) -> UITableViewCell {
+        
+        let datePicker = UIDatePicker()
+        
+        let labelFieldCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
+        datePicker.datePickerMode = .date
+        let toolbar = UIToolbar();
+        toolbar.sizeToFit()
+        let doneButton = doneButton;
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let cancelButton = cancelButton;
+        toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
+        labelFieldCell.labelTextField.inputAccessoryView = toolbar
+        labelFieldCell.labelTextField.inputView = datePicker
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        labelFieldCell.labelTextField.text = formatter.string(from: datePicker.date)
+        labelFieldCell.labelString.text = label
+        return labelFieldCell
+        
+    }
+    
+    func createWatchListCell(leftlabel: String, rightlabel: String) -> UITableViewCell {
+        let textFieldCell = Bundle.main.loadNibNamed("WatchListDetail1Cell", owner: self, options: nil)?.first as! WatchListDetail1Cell
+        textFieldCell.leftLabel.text = leftlabel
+        textFieldCell.rightLabel.text = rightlabel
+        return textFieldCell
+    }
+    
+    func createTextFieldCell(textString: String, placeholderString: String) -> TextFieldCell {
+        let textFieldCell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
+        textFieldCell.textFieldCell.placeholder = placeholderString
+        textFieldCell.textFieldCell.text = textString
+        return textFieldCell
+    }
+    
+    func decodeStockObject(fromData: Data) -> Stock? {
+        do {
+            let decodedStock = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(fromData) as! Stock
+            return decodedStock
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    func decodeDividendObject(fromData: Data) -> Dividend? {
+        do {
+            let decodedDividend = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(fromData) as! Dividend
+            return decodedDividend
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    func decodeWatchListObject(fromData: Data) -> WatchListItem? {
+        do {
+            let decodedWatchListItem = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(fromData) as! WatchListItem
+            return decodedWatchListItem
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    func saveData(data: Data, atKey: String, atArray: String){
+     
+        let userDefaults = UserDefaults.standard
+
+        userDefaults.set(data, forKey: atKey)
+        userDefaults.synchronize()
+        
+        var stockNameArray = userDefaults.stringArray(forKey: atArray)
+        if (stockNameArray == nil) {
+            stockNameArray = []
+        }
+        
+        stockNameArray?.append(atKey)
+        userDefaults.set(stockNameArray, forKey: atArray)
     }
 }

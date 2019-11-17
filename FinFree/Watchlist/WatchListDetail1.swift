@@ -10,17 +10,21 @@ import UIKit
 
 class WatchListDetail1: UITableViewController {
     
-    let criterias = ["companyName", "symbol", "marketcap", "dividendRate", "dividendYield", "exDividendDate", "week52high", "week52low"]
+    let criterias = ["companyName", "marketcap", "peRatio", "dividendYield", "exDividendDate", "nextEarningsDate", "week52high", "week52low"]
     var criteriaValues: [String] = []
     let calculation = Calculation()
     var token = Token()
+    var selectedStock = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.tableFooterView = UIView()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         getJsonData()
+        self.tableView.reloadData()
     }
     
     // MARK: - Table view data source
@@ -48,11 +52,20 @@ class WatchListDetail1: UITableViewController {
         if criteriaValues.count == 0 {
             watchListCell.leftLabel.text = "No data found."
         } else {
-            watchListCell.leftLabel.text = criterias[indexPath.row].capitalized + ": "
-            watchListCell.leftLabel.font = .boldSystemFont(ofSize: 16)
-            let labeltext = calculation.formatPoints(num: criteriaValues[indexPath.row])
-            watchListCell.rightLabel.text = labeltext
-            watchListCell.rightLabel.numberOfLines = 0
+            if (indexPath.row == 3) {
+                watchListCell.leftLabel.text = criterias[indexPath.row].capitalized + ": "
+                watchListCell.leftLabel.font = .boldSystemFont(ofSize: 16)
+                let labeltext = calculation.roundDividendYield(num: criteriaValues[indexPath.row])
+                watchListCell.rightLabel.text = labeltext
+                watchListCell.rightLabel.numberOfLines = 0
+            } else {
+                watchListCell.leftLabel.text = criterias[indexPath.row].capitalized + ": "
+                watchListCell.leftLabel.font = .boldSystemFont(ofSize: 16)
+                let labeltext = calculation.formatPoints(num: criteriaValues[indexPath.row])
+                watchListCell.rightLabel.text = labeltext
+                watchListCell.rightLabel.numberOfLines = 0
+            }
+            
         }
         
         return watchListCell
@@ -60,7 +73,8 @@ class WatchListDetail1: UITableViewController {
     
     func getJsonData() {
         
-        let urlString = token.testURL(symbol: "aapl", info: "/stats")
+        print(selectedStock)
+        let urlString = token.testURL(symbol: selectedStock, info: "/stats")
         //let urlString = "https://api.iextrading.com/1.0/stock/aapl/stats/"
         
         guard let url = URL(string: urlString) else {
@@ -81,14 +95,12 @@ class WatchListDetail1: UITableViewController {
                     let dictionary = json as! [String:Any]
                     print(dictionary)
                     for criteria in self.criterias {
-                        if let value = dictionary[criteria] as? Any {
-                            let valueAsString = "\(value)"
-                            let valueAsStringRe = valueAsString.replacingOccurrences(of: "Optional(", with: "")
-                            let valueFinal = valueAsStringRe.replacingOccurrences(of: ")", with: "")
-                            self.criteriaValues.append(valueFinal)
-                        } else {
-                            print(criteria)
-                        }
+                        let value = dictionary[criteria]
+                        let valueAsString = String(describing: value)
+                        let valueAsStringRe = valueAsString.replacingOccurrences(of: "Optional(", with: "")
+                        let valueFinal = valueAsStringRe.replacingOccurrences(of: ")", with: "")
+                        print(valueFinal)
+                        self.criteriaValues.append(valueFinal)
                     }
                     self.tableView.reloadData()
                 } catch {

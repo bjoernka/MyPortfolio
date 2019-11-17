@@ -41,6 +41,10 @@
 		199F2330227E40EC001550A8 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199F232F227E40EC001550A8 /* Stock.swift */; };
 		199F2332227F6841001550A8 /* DetailStock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199F2331227F6841001550A8 /* DetailStock.swift */; };
 		199F23342280C773001550A8 /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199F23332280C772001550A8 /* Calculate.swift */; };
+		19B9538B22C13FB300E02C74 /* PerformanceChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B9538A22C13FB300E02C74 /* PerformanceChart.swift */; };
+		19B9538D22C13FC000E02C74 /* PerformanceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B9538C22C13FC000E02C74 /* PerformanceDetail.swift */; };
+		19D37AE1235DC31D00E2CA1D /* ImageLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D37ADF235DC31D00E2CA1D /* ImageLabelCell.swift */; };
+		19D37AE2235DC31D00E2CA1D /* ImageLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 19D37AE0235DC31D00E2CA1D /* ImageLabelCell.xib */; };
 		19F84F6522293A0F00343773 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6422293A0F00343773 /* Portfolio.swift */; };
 		19F84F6722293E1700343773 /* StockAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6622293E1700343773 /* StockAssets.swift */; };
 		19F84F6922293EBB00343773 /* Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F84F6822293EBB00343773 /* Performance.swift */; };
@@ -86,6 +90,10 @@
 		199F232F227E40EC001550A8 /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		199F2331227F6841001550A8 /* DetailStock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailStock.swift; sourceTree = "<group>"; };
 		199F23332280C772001550A8 /* Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculate.swift; sourceTree = "<group>"; };
+		19B9538A22C13FB300E02C74 /* PerformanceChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceChart.swift; sourceTree = "<group>"; };
+		19B9538C22C13FC000E02C74 /* PerformanceDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDetail.swift; sourceTree = "<group>"; };
+		19D37ADF235DC31D00E2CA1D /* ImageLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLabelCell.swift; sourceTree = "<group>"; };
+		19D37AE0235DC31D00E2CA1D /* ImageLabelCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageLabelCell.xib; sourceTree = "<group>"; };
 		19F84F6422293A0F00343773 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		19F84F6622293E1700343773 /* StockAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAssets.swift; sourceTree = "<group>"; };
 		19F84F6822293EBB00343773 /* Performance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Performance.swift; sourceTree = "<group>"; };
@@ -159,6 +167,8 @@
 				1942B70F22AEDFEB0049C342 /* WatchListDetail1Cell.swift */,
 				1942B71022AEDFEB0049C342 /* WatchListDetail1Cell.xib */,
 				1942B72322B56E260049C342 /* ColorTemplates.swift */,
+				19D37ADF235DC31D00E2CA1D /* ImageLabelCell.swift */,
+				19D37AE0235DC31D00E2CA1D /* ImageLabelCell.xib */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -167,6 +177,8 @@
 			isa = PBXGroup;
 			children = (
 				19F84F6822293EBB00343773 /* Performance.swift */,
+				19B9538A22C13FB300E02C74 /* PerformanceChart.swift */,
+				19B9538C22C13FC000E02C74 /* PerformanceDetail.swift */,
 			);
 			path = Performance;
 			sourceTree = "<group>";
@@ -313,6 +325,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1942B71222AEDFEB0049C342 /* WatchListDetail1Cell.xib in Resources */,
+				19D37AE2235DC31D00E2CA1D /* ImageLabelCell.xib in Resources */,
 				192B740221A9516C003CFCEA /* LaunchScreen.storyboard in Resources */,
 				192B73FF21A9516C003CFCEA /* Assets.xcassets in Resources */,
 				192B73FD21A9516A003CFCEA /* Main.storyboard in Resources */,
@@ -377,9 +390,11 @@
 			files = (
 				1942B70822AED08E0049C342 /* WatchListDetail1.swift in Sources */,
 				199F23342280C773001550A8 /* Calculate.swift in Sources */,
+				19D37AE1235DC31D00E2CA1D /* ImageLabelCell.swift in Sources */,
 				19F84F6B22293EC900343773 /* WatchList.swift in Sources */,
 				1942B71A22B002530049C342 /* DividendsDetail3.swift in Sources */,
 				199F2332227F6841001550A8 /* DetailStock.swift in Sources */,
+				19B9538B22C13FB300E02C74 /* PerformanceChart.swift in Sources */,
 				19F84F6522293A0F00343773 /* Portfolio.swift in Sources */,
 				19F84F6922293EBB00343773 /* Performance.swift in Sources */,
 				192B73FA21A9516A003CFCEA /* ViewController.swift in Sources */,
@@ -388,6 +403,7 @@
 				1942B71122AEDFEB0049C342 /* WatchListDetail1Cell.swift in Sources */,
 				19F84F6D22293EEB00343773 /* News.swift in Sources */,
 				1942B71C22B025EB0049C342 /* AddDividend.swift in Sources */,
+				19B9538D22C13FC000E02C74 /* PerformanceDetail.swift in Sources */,
 				19967770228E0F08005B7CDA /* SectionAssets.swift in Sources */,
 				1996776E228E043F005B7CDA /* Assets.swift in Sources */,
 				191C33B22298C91A00AC5F59 /* NewsDetail.swift in Sources */,

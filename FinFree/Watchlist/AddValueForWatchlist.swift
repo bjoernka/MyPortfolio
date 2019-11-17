@@ -41,20 +41,7 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
         setUIBarButtons()
         showDatePicker()
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        symbolCell = Bundle.main.loadNibNamed("TextFieldCell", owner: self, options: nil)?.first as! TextFieldCell
-//        symbolCell.textFieldCell.delegate = self
-//        
-//        
-//        comNameCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
-//        dateCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
-//        curPriceCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
-//        desPriceCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
-//
-//        cellArray = [LabelTextFieldCell(), dateCell, comNameCell, curPriceCell, desPriceCell]
-//    }
-//    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -122,22 +109,16 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
         checkValues()
         
         if savingSuccesful == true {
-        
-        let isoDate = dateCell.labelTextField.text!
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        let dateConv = dateFormatter.date(from:isoDate)!
-        
+            
         let watchListItem = WatchListItem(companyName: companyName,
                                           symbol: symbol,
                                           savedPrice: currentPrice,
                                           currentPrice: currentPrice,
-                                          date: dateConv,
+                                          date: date,
                                           desiredPrice: desiredPrice)
         
-        let name = symbolCell.textFieldCell.text
+        let name = symbol + "watchList"
         
-        let userDefaults = UserDefaults.standard
         var encodedData = Data()
         do {
             encodedData = try NSKeyedArchiver.archivedData(withRootObject: watchListItem, requiringSecureCoding: false)
@@ -145,23 +126,8 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
         catch {
             print("ERROR! " + "\(error)")
         }
-        if name != nil {
-            userDefaults.set(encodedData, forKey: name!)
-            userDefaults.synchronize()
-        }
-        
-        
-        let defaults = UserDefaults.standard
-        watchListArray = defaults.stringArray(forKey: "watchListArrayNew")
-        if (watchListArray == nil) {
-            watchListArray = []
-        }
-        
-        if (name != nil) {
-            watchListArray?.append(name!)
-            print(watchListArray)
-            defaults.set(watchListArray, forKey: "watchListArrayNew")
-        }
+            
+        helperFunc.saveData(data: encodedData, atKey: name, atArray: "watchListArrayNew1")
         
         // let add-view disappear
             helperFunc.letViewDisappear(navController: self.navigationController)
