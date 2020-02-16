@@ -11,6 +11,7 @@ import UIKit
 class WatchListDetailTabBar: UITabBarController {
 
     var selectedStock = String()
+    var stockFile = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,12 @@ class WatchListDetailTabBar: UITabBarController {
         let watchList2BarItem = UITabBarItem(title: "Graph", image: UIImage(named: "HistoricGraphIcon"), selectedImage: UIImage(named: "HistoricGraphIcon"))
         watchList2!.tabBarItem = watchList2BarItem
         watchList2!.selectedStock = selectedStock
-        let tabBarlist = [watchList1,watchList2!]
+        let watchList3 = WatchListDetail3()
+        let watchList3BarItem = UITabBarItem(title: "Change", image: UIImage(named: "Dollar"), selectedImage: UIImage(named: "Dollar"))
+        watchList3.tabBarItem = watchList3BarItem
+        watchList3.selectedStockFile = stockFile
+        watchList3.selectedStock = selectedStock
+        let tabBarlist = [watchList3, watchList1,watchList2!]
         viewControllers = tabBarlist
     }
 }

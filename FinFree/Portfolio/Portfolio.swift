@@ -12,8 +12,8 @@ class Portfolio: UITableViewController {
     
     var defaults = UserDefaults.standard
     // Array for names that need to show up in the tableview
-    var stockNameArray : [String]? = ["No saved values."]
-    var helpFunc = HelpFunctions()
+    var namesForTableView : [String]? = ["No saved values."]
+    var helpFunctions = HelpFunctions()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +29,13 @@ class Portfolio: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
-        stockNameArray = defaults.stringArray(forKey: "portfolioValuesNames1")
-        if stockNameArray == nil {
-            stockNameArray = ["No saved values."]
+        // Get Names for tableView from defaults
+        namesForTableView = defaults.stringArray(forKey: "portfolioValues")
+        if namesForTableView == nil {
+            namesForTableView = ["No saved values."]
         }
         
         self.tableView.reloadData()
-
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -43,26 +43,27 @@ class Portfolio: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stockNameArray!.count
+        return namesForTableView!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let stockName = stockNameArray![indexPath.row]
-        let decoded  = defaults.data(forKey: stockName)
-        if decoded == nil {
-            cell.textLabel?.text = stockNameArray![indexPath.row]
-        } else {
-            let decodedStock = helpFunc.decodeStockObject(fromData: decoded!)
+        let stockName = namesForTableView![indexPath.row]
+        
+        // get Stockobject from default 
+        if let decoded  = defaults.data(forKey: stockName) {
+            let decodedStock = helpFunctions.decodeStockObject(fromData: decoded)
             cell.textLabel?.text = decodedStock!.companyName
             cell.accessoryType = .disclosureIndicator
+        } else {
+            cell.textLabel?.text = namesForTableView![indexPath.row]
         }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            stockNameArray?.remove(at: indexPath.row)
+            namesForTableView?.remove(at: indexPath.row)
             self.tableView.reloadData()
         }
     }
@@ -76,7 +77,6 @@ class Portfolio: UITableViewController {
         transition.subtype = CATransitionSubtype.fromTop
         self.navigationController!.view.layer.add(transition, forKey: kCATransition)
         
-//        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "addValue") as? AddValue
         let vc = AddValue()
         self.navigationController?.pushViewController(vc, animated: false)
     }
@@ -84,7 +84,8 @@ class Portfolio: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailStock()
         vc.title = tableView.cellForRow(at: indexPath)?.textLabel?.text
-        vc.pickedStock = stockNameArray![indexPath.row]
+        vc.companyName = (tableView.cellForRow(at: indexPath)?.textLabel?.text)!
+        vc.pickedStock = namesForTableView![indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

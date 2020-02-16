@@ -76,6 +76,7 @@ class WatchListDetail1: UITableViewController {
         print(selectedStock)
         let urlString = token.testURL(symbol: selectedStock, info: "/stats")
         //let urlString = "https://api.iextrading.com/1.0/stock/aapl/stats/"
+        print(urlString)
         
         guard let url = URL(string: urlString) else {
             return
@@ -102,18 +103,17 @@ class WatchListDetail1: UITableViewController {
                         print(valueFinal)
                         self.criteriaValues.append(valueFinal)
                     }
-                    self.tableView.reloadData()
                 } catch {
                     print("The error is:")
                     print(error)
                 }
             }
-            }.resume()
-        
+            self.tableView.reloadData()
+        }.resume()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.tableView.frame.size.height / 9
     }
-
+    
 }

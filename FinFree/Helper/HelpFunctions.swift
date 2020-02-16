@@ -140,12 +140,42 @@ class HelpFunctions: NSObject {
         userDefaults.set(data, forKey: atKey)
         userDefaults.synchronize()
         
-        var stockNameArray = userDefaults.stringArray(forKey: atArray)
-        if (stockNameArray == nil) {
-            stockNameArray = []
+        var stockNames = userDefaults.stringArray(forKey: atArray)
+        if (stockNames == nil) {
+            stockNames = []
         }
         
-        stockNameArray?.append(atKey)
-        userDefaults.set(stockNameArray, forKey: atArray)
+        stockNames?.append(atKey)
+        userDefaults.set(stockNames, forKey: atArray)
+    }
+    
+    func downloadJsonData(urlString: String) -> Any? {
+        var json: Any? = nil
+        
+        if let url = URL(string: urlString) {
+            let session = URLSession.shared
+            session.dataTask(with: url) { (data, response, error) in
+                if let response = response {
+                    print(response)
+                }
+                if let data = data {
+                    print(data)
+                    do {
+                        json = try JSONSerialization.jsonObject(with: data, options: [])
+                    } catch {
+                        print("The error is:")
+                        print(error)
+                    }
+                }
+            }.resume()
+        } else {
+            print("\(urlString)" + " is not a valid url.")
+        }
+        
+        return json
+    }
+    
+    func checkIfLabelTextFiedCell(row: Int, section: Int) {
+        
     }
 }

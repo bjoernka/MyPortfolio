@@ -25,6 +25,14 @@ class DetailStock: UITableViewController {
     var pickedStock = ""
     var token = Token()
     var helpFunc = HelpFunctions()
+    let activityIndicator = UIActivityIndicatorView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        tableView.tableFooterView = UIView()
+        
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -72,14 +80,10 @@ class DetailStock: UITableViewController {
         return 60
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.tableFooterView = UIView()
-        
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
+        activityIndicator.center = self.view.center
+        activityIndicator.color = UIColor.green
+        self.view.addSubview(activityIndicator)
         getStock()
         self.tableView.reloadData()
     }
@@ -106,6 +110,7 @@ class DetailStock: UITableViewController {
     
     func downloadPrice(stockname: String) {
         
+        self.activityIndicator.startAnimating()
         //let urlString = "https://query1.finance.yahoo.com/v7/finance/quote?symbols=aapl"
         let urlString = token.testURL(symbol: stockname, info: "/quote")
         print(urlString)
@@ -123,26 +128,11 @@ class DetailStock: UITableViewController {
             if let data = data {
                 print(data)
                 do {
+                    
                     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     print("Json ist:")
                     print(json)
-                    //                        if let result = json as? [String : [String: Any]] {
-                    //                            print("Perfect!")
-                    //                            print(result)
-                    //                            print("Seperator")
-                    //                            if let object = result["quoteResponse"] {
-                    //                                let resultObj = object["result"]
-                    //                                print(resultObj)
-                    //                                if let resultConverted = resultObj as? [[String: Any]] {
-                    //                                    print("Resultconverted")
-                    //                                    let firstResult = resultConverted[0]
-                    //                                    self.curPrice = firstResult["regularMarketPrice"] as! Double
-                    //                                    self.companyName = firstResult["shortName"] as! String
-                    //                                }
-                    //                            }
-                    //                        } else {
-                    //                            print("Not so good!")
-                    //                        }
+                    
                     if let dictionary = json as? [String: Any] {
                         if let companyNameString = dictionary["companyName"] as? String {
                             self.companyName = companyNameString
@@ -157,8 +147,9 @@ class DetailStock: UITableViewController {
                     print(error)
                 }
             }
-            }.resume()
+        }.resume()
         self.tableView.reloadData()
+        self.activityIndicator.stopAnimating()
         return
     }
     

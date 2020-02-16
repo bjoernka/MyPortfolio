@@ -10,7 +10,7 @@ import UIKit
 import Charts
 
 class SectionAssets: UIViewController {
-
+    
     var stockNameArray : [String]? = nil
     var chartDataEntries : [PieChartDataEntry] = []
     let defaults = UserDefaults.standard
@@ -20,26 +20,45 @@ class SectionAssets: UIViewController {
     var helperFunc = HelpFunctions()
     var pieChartView = PieChartView()
     
-    
-//    @IBOutlet weak var pieChartView: PieChartView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
         
-        stockNameArray = defaults.stringArray(forKey: "portfolioValuesNames1")
+        getStocks()
+        
+        setupPieCharts()
+    }
+    
+    func setupView(){
+        
+        self.view.backgroundColor = .white
+        self.view.addSubview(pieChartView)
+        pieChartView.translatesAutoresizingMaskIntoConstraints = false
+        pieChartView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        pieChartView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        pieChartView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        pieChartView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
+    }
+    
+    func getStocks() {
+        
+        stockNameArray = defaults.stringArray(forKey: "portfolioValues")
         if stockNameArray != nil {
             for stock in stockNameArray! {
                 let decoded  = defaults.data(forKey: stock)
                 if decoded != nil {
                     let decodedStock = helperFunc.decodeStockObject(fromData: decoded!)
-                    //let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Stock
                     totalPrices.append(decodedStock!.totalPrice)
                     sectorNames.append(decodedStock!.sector)
                 }
             }
         }
+        
+    }
+    
+    func setupPieCharts() {
         
         namesAndPrices = helperFunc.turnArraysIntoDictionaries(stringArray: sectorNames, doubleArray: totalPrices)
         
@@ -68,16 +87,4 @@ class SectionAssets: UIViewController {
         
     }
     
-    func setupView(){
-        
-        self.view.backgroundColor = .white
-        self.view.addSubview(pieChartView)
-        pieChartView.translatesAutoresizingMaskIntoConstraints = false
-        pieChartView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        pieChartView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        pieChartView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        pieChartView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        
-    }
-
 }

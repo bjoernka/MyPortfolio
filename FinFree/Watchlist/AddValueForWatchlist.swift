@@ -10,7 +10,7 @@ import UIKit
 
 class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
     
-    var criterias = ["Symbol",  "Date", "Name of the Company", "Current Price", "Desired Price"]
+    var criterias = ["Symbol",  "Name of the Company", "Date", "Current Price", "Desired Price"]
     var plHoldValues = ["AAPL", "Apple Inc.", "2019-06-01", "190.0", "190.0"]
     var symbolCell = TextFieldCell()
     var comNameCell = LabelTextFieldCell()
@@ -58,25 +58,17 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
             cell.textFieldCell.addTarget(self, action: #selector(self.textFieldDidEndEditing(_:)), for: .editingDidEnd)
             return cell
         } else if indexPath.row == 1{
-            let cell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
-            datePicker.datePickerMode = .date
-            let toolbar = UIToolbar();
-            toolbar.sizeToFit()
-            let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(donedatePicker));
-            let spaceButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
-            let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelDatePicker));
-            toolbar.setItems([cancelButton,spaceButton,doneButton], animated: false)
-            cell.labelTextField.inputAccessoryView = toolbar
-            cell.labelTextField.inputView = datePicker
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd/MM/yyyy"
-            cell.labelTextField.text = formatter.string(from: datePicker.date)
-            cell.labelString.text = criterias[indexPath.row]
-            return cell
-        } else if indexPath.row == 2{
             let cell = Bundle.main.loadNibNamed("WatchListDetail1Cell", owner: self, options: nil)?.first as! WatchListDetail1Cell
             cell.leftLabel.text = criterias[indexPath.row]
             cell.rightLabel.text = companyName
+            return cell
+        } else if indexPath.row == 2{
+            let cell = Bundle.main.loadNibNamed("WatchListDetail1Cell", owner: self, options: nil)?.first as! WatchListDetail1Cell
+            datePicker.datePickerMode = .date
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            cell.leftLabel.text = criterias[indexPath.row]
+            cell.rightLabel.text = formatter.string(from: datePicker.date)
             return cell
         } else if indexPath.row == 3 {
             let cell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
@@ -127,7 +119,7 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
             print("ERROR! " + "\(error)")
         }
             
-        helperFunc.saveData(data: encodedData, atKey: name, atArray: "watchListArrayNew1")
+        helperFunc.saveData(data: encodedData, atKey: name, atArray: "watchListValues")
         
         // let add-view disappear
             helperFunc.letViewDisappear(navController: self.navigationController)
@@ -237,10 +229,17 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
         } else {
             savingSuccesful =  false
         }
-
-        if let secondCell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? LabelTextFieldCell{
+        
+        if let secondCell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? LabelTextFieldCell {
+            companyName = secondCell.labelTextField.text!
+            savingSuccesful = true
+        } else {
+            savingSuccesful = false
+        }
+        
+        if let thirdCell = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LabelTextFieldCell{
             if let dateConv = helperFunc.checkIfCellValueIsDate(
-                textFieldValue: secondCell.labelTextField.text!,
+                textFieldValue: thirdCell.labelTextField.text!,
                 errorTitle: "Date not valid",
                 errorMessage: "Please enter a valid date",
                 vc: self) {
@@ -249,13 +248,6 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
             } else {
                 savingSuccesful = false
             }
-        }
-        
-        if let thirdCell = self.tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LabelTextFieldCell {
-            companyName = thirdCell.labelTextField.text!
-            savingSuccesful = true
-        } else {
-            savingSuccesful = false
         }
         
         if let fourthCell = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as? LabelTextFieldCell {

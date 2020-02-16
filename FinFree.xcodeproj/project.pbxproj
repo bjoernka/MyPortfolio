@@ -25,6 +25,7 @@
 		192B73FD21A9516A003CFCEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 192B73FB21A9516A003CFCEA /* Main.storyboard */; };
 		192B73FF21A9516C003CFCEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 192B73FE21A9516C003CFCEA /* Assets.xcassets */; };
 		192B740221A9516C003CFCEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 192B740021A9516C003CFCEA /* LaunchScreen.storyboard */; };
+		1933786A23C5ABBA00A41DA2 /* WatchListDetail3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1933786923C5ABBA00A41DA2 /* WatchListDetail3.swift */; };
 		1942B70822AED08E0049C342 /* WatchListDetail1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B70722AED08E0049C342 /* WatchListDetail1.swift */; };
 		1942B71122AEDFEB0049C342 /* WatchListDetail1Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1942B70F22AEDFEB0049C342 /* WatchListDetail1Cell.swift */; };
 		1942B71222AEDFEB0049C342 /* WatchListDetail1Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1942B71022AEDFEB0049C342 /* WatchListDetail1Cell.xib */; };
@@ -74,6 +75,7 @@
 		192B73FE21A9516C003CFCEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		192B740121A9516C003CFCEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		192B740321A9516C003CFCEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1933786923C5ABBA00A41DA2 /* WatchListDetail3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListDetail3.swift; sourceTree = "<group>"; };
 		1942B70722AED08E0049C342 /* WatchListDetail1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListDetail1.swift; sourceTree = "<group>"; };
 		1942B70F22AEDFEB0049C342 /* WatchListDetail1Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListDetail1Cell.swift; sourceTree = "<group>"; };
 		1942B71022AEDFEB0049C342 /* WatchListDetail1Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WatchListDetail1Cell.xib; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				190F623422A8461C00FA311B /* WatchListDetailTabBar.swift */,
 				190F623622A848FD00FA311B /* WatchListDetail2.swift */,
 				1942B70722AED08E0049C342 /* WatchListDetail1.swift */,
+				1933786923C5ABBA00A41DA2 /* WatchListDetail3.swift */,
 			);
 			path = Watchlist;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				19967770228E0F08005B7CDA /* SectionAssets.swift in Sources */,
 				1996776E228E043F005B7CDA /* Assets.swift in Sources */,
 				191C33B22298C91A00AC5F59 /* NewsDetail.swift in Sources */,
+				1933786A23C5ABBA00A41DA2 /* WatchListDetail3.swift in Sources */,
 				1942B72022B328800049C342 /* HelpFunctions.swift in Sources */,
 				19F84F72224E31F600343773 /* AddValue.swift in Sources */,
 				191C33BF22A07FAA00AC5F59 /* AddValueForWatchlist.swift in Sources */,

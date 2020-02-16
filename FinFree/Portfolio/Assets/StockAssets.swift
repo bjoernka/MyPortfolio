@@ -23,9 +23,11 @@ class StockAssets: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getStocks()
+        
         setupView()
-    
-        setupChart()
+        
+        setupPieChart()
     }
     
     // setup Pie-Chart constraints
@@ -42,10 +44,9 @@ class StockAssets: UIViewController {
         
     }
     
-    // setup Pie-Chart with total prices and company names
-    func setupChart() {
-     
-        stockNameArray = defaults.stringArray(forKey: "portfolioValuesNames1")
+    func getStocks() {
+        
+        stockNameArray = defaults.stringArray(forKey: "portfolioValues")
         if stockNameArray != nil {
             for stock in stockNameArray! {
                 let decoded  = defaults.data(forKey: stock)
@@ -57,6 +58,12 @@ class StockAssets: UIViewController {
                 }
             }
         }
+        
+    }
+    
+    // setup Pie-Chart with total prices and company names
+    func setupPieChart() {
+        
         
         // Dictionary - with all company names and associated prices
         namesAndPrices = helperFunc.turnArraysIntoDictionaries(stringArray: companyNames, doubleArray: totalPrices)

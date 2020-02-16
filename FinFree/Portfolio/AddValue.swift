@@ -8,10 +8,9 @@
 
 import UIKit
 
-class AddValue: UITableViewController, UITextFieldDelegate {
+class AddValue: UITableViewController {
 
     var helpFunc = HelpFunctions()
-    var stockNameArray: [String]? = []
     var criterias = ["Symbol", "Name of the company", "Sector", "Current Price", "Amount", "Taxes", "Fess", "Date",  "Total Price"]
     var symbol = ""
     var companyName = ""
@@ -24,10 +23,9 @@ class AddValue: UITableViewController, UITextFieldDelegate {
     var totalPrice = 0.0
     var savingName = ""
     var savingSuccesful = false
-    var helperFunc = HelpFunctions()
     let datePicker = UIDatePicker()
     let userDefaults = UserDefaults.standard
-    var doubleValues: [Double] = []
+    var placeHolderValues: [Double] = []
     var token = Token()
     
     override func viewDidLoad() {
@@ -52,19 +50,26 @@ class AddValue: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        doubleValues = [0.0, 0.0, 0.0, currentPrice,amount, taxes,fees, 0.0,]
+        placeHolderValues = [0.0, 0.0, 0.0, currentPrice,amount, taxes,fees, 0.0,]
         
-        if(indexPath.row == 0){
+        switch indexPath.row {
+        case 0:
             let cell = helpFunc.createTextFieldCell(textString: symbol, placeholderString: criterias[indexPath.row])
             cell.textFieldCell.delegate = self
             return cell
-        } else if(indexPath.row == 1){
+        case 1:
             let cell = helpFunc.createWatchListCell(leftlabel: criterias[indexPath.row], rightlabel: companyName)
             return cell
-        } else if(indexPath.row == 2){
+        case 2:
             let cell = helpFunc.createWatchListCell(leftlabel: criterias[indexPath.row], rightlabel: sector)
             return cell
-        } else if(indexPath.row == 7) {
+        case 3,4,5,6:
+            let labelFieldCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
+            labelFieldCell.labelString.text = criterias[indexPath.row]
+            labelFieldCell.labelTextField.text = "\(placeHolderValues[indexPath.row])"
+            labelFieldCell.labelTextField.addTarget(self, action: #selector(self.updateTotalPrice(_:)), for: .editingDidEnd)
+            return labelFieldCell
+        case 7:
             let labelFieldCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
             datePicker.datePickerMode = .date
             let toolbar = UIToolbar();
@@ -80,17 +85,10 @@ class AddValue: UITableViewController, UITextFieldDelegate {
             labelFieldCell.labelTextField.text = formatter.string(from: datePicker.date)
             labelFieldCell.labelString.text = criterias[indexPath.row]
             return labelFieldCell
-        } else if(indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 5 || indexPath.row == 6){
-            let labelFieldCell = Bundle.main.loadNibNamed("LabelTextFieldCell", owner: self, options: nil)?.first as! LabelTextFieldCell
-            labelFieldCell.labelString.text = criterias[indexPath.row]
-            labelFieldCell.labelTextField.text = "\(doubleValues[indexPath.row])"
-            labelFieldCell.labelTextField.addTarget(self, action: #selector(self.updateTotalPrice(_:)), for: .editingDidEnd)
-            return labelFieldCell
-        } else {
+        default:
             let cell = helpFunc.createWatchListCell(leftlabel: criterias[indexPath.row], rightlabel: "\(totalPrice)")
             return cell
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -111,7 +109,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
     
     @objc func onSaved (_ sender : AnyObject?){
         
-        saveData()
+        checkEntries()
         
         if savingSuccesful == true {
         
@@ -135,7 +133,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
             print("ERROR! " + "\(error)")
         }
             
-        helperFunc.saveData(data: encodedData, atKey: name, atArray: "portfolioValuesNames1")
+        helpFunc.saveData(data: encodedData, atKey: name, atArray: "portfolioValues")
 
         // let add-view disappear
         helpFunc.letViewDisappear(navController: self.navigationController)
@@ -144,66 +142,15 @@ class AddValue: UITableViewController, UITextFieldDelegate {
         }
     }
     
-    @objc func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        let textFieldValue = textField.text
-        
-        if textFieldValue != nil {
-        
-            let urlString = token.testURL(symbol: textFieldValue!, info: "/company")
-            
-            //let urlString = "https://api.iextrading.com/1.0/stock/" + textFieldValue! + "/quote"
-            
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        
-        let session = URLSession.shared
-        session.dataTask(with: url) { (data, response, error) in
-            if let response = response {
-                print(response)
-            }
-            
-            if let data = data {
-                print(data)
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print("Json ist:")
-                    print(json)
-                    if let dictionary = json as? [String: Any] {
-                        if let symbolString = dictionary["symbol"] as? String {
-                            self.symbol = "\(symbolString)"
-                        }
-                        if let companyNameString = dictionary["companyName"] as? String {
-                            self.companyName = companyNameString
-                        }
-                        if let sectorString = dictionary["sector"] as? String {
-                            self.sector = sectorString
-                        }   
-                    }
-                } catch {
-                    print("The error is:")
-                    print(error)
-                }
-            }
-            }.resume()
-        
-        return
-        } else {
-            print("Title not found")
-        }
-        self.tableView.reloadData()
-    }
-    
     @objc func updateTotalPrice(_ textField: UITextField) {
         
-        saveData()
+        checkEntries()
         totalPrice = (currentPrice * amount) + fees + taxes
         self.tableView.reloadData()
     }
     
     
-    func saveData() {
+    func checkEntries() {
         
         if let firstCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextFieldCell {
             symbol = firstCell.textFieldCell.text!
@@ -227,7 +174,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
         }
         
         if let fourthCell = self.tableView.cellForRow(at: IndexPath(row: 3, section: 0)) as? LabelTextFieldCell {
-            if let curPriceCell = helperFunc.checkIfCellValueIsDouble(
+            if let curPriceCell = helpFunc.checkIfCellValueIsDouble(
                 textFieldValue: fourthCell.labelTextField.text!,
                 errorTitle: "Price not valid",
                 errorMessage: "Please enter a valid price",
@@ -240,7 +187,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
         }
         
         if let fifthCell = self.tableView.cellForRow(at: IndexPath(row: 4, section: 0)) as? LabelTextFieldCell {
-            if let amountCell = helperFunc.checkIfCellValueIsDouble(
+            if let amountCell = helpFunc.checkIfCellValueIsDouble(
                 textFieldValue: fifthCell.labelTextField.text!,
                 errorTitle: "Amount not valid",
                 errorMessage: "Please enter a valid amount",
@@ -253,7 +200,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
         }
         
         if let sixthCell = self.tableView.cellForRow(at: IndexPath(row: 5, section: 0)) as? LabelTextFieldCell {
-            if let taxesCell = helperFunc.checkIfCellValueIsDouble(
+            if let taxesCell = helpFunc.checkIfCellValueIsDouble(
                 textFieldValue: sixthCell.labelTextField.text!,
                 errorTitle: "Fees not valid",
                 errorMessage: "Please enter a valid fee",
@@ -266,7 +213,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
         }
         
         if let seventhCell = self.tableView.cellForRow(at: IndexPath(row: 6, section: 0)) as? LabelTextFieldCell {
-            if let feeCell = helperFunc.checkIfCellValueIsDouble(
+            if let feeCell = helpFunc.checkIfCellValueIsDouble(
                 textFieldValue: seventhCell.labelTextField.text!,
                 errorTitle: "Taxes not valid",
                 errorMessage: "Please enter a valid tax",
@@ -279,7 +226,7 @@ class AddValue: UITableViewController, UITextFieldDelegate {
         }
         
         if let eigthCell = self.tableView.cellForRow(at: IndexPath(row: 7, section: 0)) as? LabelTextFieldCell{
-            if let dateConv = helperFunc.checkIfCellValueIsDate(
+            if let dateConv = helpFunc.checkIfCellValueIsDate(
                 textFieldValue: eigthCell.labelTextField.text!,
                 errorTitle: "Date not valid",
                 errorMessage: "Please enter a valid date",
@@ -302,4 +249,54 @@ class AddValue: UITableViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
         
+}
+
+extension AddValue: UITextFieldDelegate {
+    
+    @objc func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        let textFieldValue = textField.text
+        
+        if textFieldValue != nil {
+            
+            let urlString = token.testURL(symbol: textFieldValue!, info: "/company")
+            
+            print(urlString)
+            
+            if let url = URL(string: urlString) {
+               let session = URLSession.shared
+                session.dataTask(with: url) { (data, response, error) in
+                    if let response = response {
+                        print(response)
+                    }
+                    
+                    if let data = data {
+                        print(data)
+                        do {
+                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+                            print("Json ist:")
+                            print(json)
+                            if let dictionary = json as? [String: Any] {
+                                if let symbolString = dictionary["symbol"] as? String {
+                                    self.symbol = "\(symbolString)"
+                                }
+                                if let companyNameString = dictionary["companyName"] as? String {
+                                    self.companyName = companyNameString
+                                }
+                                if let sectorString = dictionary["industry"] as? String {
+                                    self.sector = sectorString
+                                }
+                            }
+                        } catch {
+                            
+                        }
+                    }
+                }.resume()
+            } else {
+                print("json could not be downloaded.")
+            }
+            return
+        }
+        self.tableView.reloadData()
+    }
 }

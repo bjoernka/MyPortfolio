@@ -20,9 +20,6 @@ class News: UITableViewController {
         // delete unnecessary rows
         tableView.tableFooterView = UIView()
         
-        // set BarButtonItems
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.onAdd(_:)))
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,7 +38,7 @@ class News: UITableViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
         defaults = UserDefaults.standard
-        stockNameArray = defaults!.stringArray(forKey: "portfolioValuesNames1")
+        stockNameArray = defaults!.stringArray(forKey: "portfolioValues")
         
         self.tableView.reloadData()
         
@@ -90,17 +87,5 @@ class News: UITableViewController {
         self.navigationController?.pushViewController(destVC, animated: true)
         
     }
-    
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+
 }

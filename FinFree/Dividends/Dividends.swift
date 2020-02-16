@@ -26,7 +26,5 @@ class Dividends: UITabBarController {
         vc3.tabBarItem = vc3BarItem
         let tabBarlist = [vc1,vc2,vc3]
         viewControllers = tabBarlist
-
-        // Do any additional setup after loading the view.
     }
 }

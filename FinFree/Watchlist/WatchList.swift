@@ -9,21 +9,22 @@
 import UIKit
 
 class WatchList: UITableViewController {
-
+    
     var watchListStocks: [String] = []
     var watchListStocksNames: [String] = []
     var watchListStocksSymbols: [String] = []
+    var watchListStocksDefault: [String]? = nil
     let helpFunc = HelpFunctions()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // delete unnecessary rows
         tableView.tableFooterView = UIView()
         
         // set BarButtonItems
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(self.onAdd(_:)))
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,11 +35,9 @@ class WatchList: UITableViewController {
         watchListStocksSymbols = []
         
         let defaults = UserDefaults.standard
-        let watchListStocksDefault = defaults.stringArray(forKey: "watchListArrayNew1")
-        if (watchListStocksDefault == nil) {
-            watchListStocksNames = ["No Stocks in Watchlist"]
-        } else {
-            watchListStocks = defaults.stringArray(forKey: "watchListArrayNew1")!
+        watchListStocksDefault = defaults.stringArray(forKey: "watchListValues")
+        if (watchListStocksDefault != nil) {
+            watchListStocks = defaults.stringArray(forKey: "watchListValues")!
             for watchListStock in watchListStocks {
                 let decoded  = defaults.data(forKey: watchListStock)
                 let decodedStock = helpFunc.decodeWatchListObject(fromData: decoded!)
@@ -47,6 +46,8 @@ class WatchList: UITableViewController {
                 watchListStocksNames.append(decodedStock!.companyName)
                 watchListStocksSymbols.append(decodedStock!.symbol)
             }
+        } else {
+            watchListStocksNames = ["No saved stocks"]
         }
         
         tableView.reloadData()
@@ -57,22 +58,30 @@ class WatchList: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = UITableViewCell()
-        
-        cell.textLabel?.text = watchListStocksNames[indexPath.row]
-        cell.accessoryType = .disclosureIndicator
-        
-        return cell
+        if watchListStocksDefault != nil {
+            let cell = UITableViewCell()
+            cell.textLabel?.text = watchListStocksNames[indexPath.row]
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        } else {
+            let cell = UITableViewCell()
+            cell.textLabel?.text = "No saved stocks"
+            return cell
+        }
         
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let destVC = WatchListDetailTabBar()
-        print(watchListStocksSymbols[indexPath.row])
-        destVC.selectedStock = watchListStocksSymbols[indexPath.row]
-        self.navigationController?.pushViewController(destVC, animated: true)
+        if watchListStocksDefault != nil {
+            let destVC = WatchListDetailTabBar()
+            print(watchListStocksSymbols[indexPath.row])
+            destVC.selectedStock = watchListStocksSymbols[indexPath.row]
+            destVC.stockFile = watchListStocksDefault![indexPath.row]
+            destVC.title = watchListStocksNames[indexPath.row]
+            self.navigationController?.pushViewController(destVC, animated: true)
+        } else {
+            
+        }
         
     }
     

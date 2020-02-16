@@ -24,7 +24,6 @@ class Dividend: NSObject, NSCoding {
         self.taxes = taxes
         self.date = date
         self.totalPrice = totalPrice
-        
     }
     
     required convenience init(coder aDecoder: NSCoder) {
