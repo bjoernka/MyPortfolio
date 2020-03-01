@@ -19,10 +19,13 @@ class StockAssets: UIViewController {
     var namesAndPrices: [String: Double] = [:]
     var helperFunc = HelpFunctions()
     var pieChartView = PieChartView()
+    var allStocks: [StockObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         getStocks()
         
         setupView()
@@ -45,25 +48,20 @@ class StockAssets: UIViewController {
     }
     
     func getStocks() {
+        totalPrices = []
+        companyNames = []
         
-        stockNameArray = defaults.stringArray(forKey: "portfolioValues")
-        if stockNameArray != nil {
-            for stock in stockNameArray! {
-                let decoded  = defaults.data(forKey: stock)
-                if decoded != nil {
-                    let decodedStock = helperFunc.decodeStockObject(fromData: decoded!)
-                    // let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Stock
-                    totalPrices.append(decodedStock!.totalPrice)
-                    companyNames.append(decodedStock!.companyName)
-                }
+        if allStocks != nil {
+            for stocks in allStocks {
+                totalPrices.append(stocks.totalPrice)
+                companyNames.append(stocks.companyName)
             }
         }
-        
     }
     
     // setup Pie-Chart with total prices and company names
     func setupPieChart() {
-        
+        chartDataEntries = []
         
         // Dictionary - with all company names and associated prices
         namesAndPrices = helperFunc.turnArraysIntoDictionaries(stringArray: companyNames, doubleArray: totalPrices)

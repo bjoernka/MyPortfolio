@@ -7,9 +7,13 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
+import FirebaseCore
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var backgroundImageView: UIImageView!
     
     @IBOutlet weak var portfolioButton: UIButton!
@@ -30,13 +34,143 @@ class ViewController: UIViewController {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var settingsLabel: UILabel!
     
+    
+    let db = Firestore.firestore()
+    var allUser: [UserObject] = []
+    var allStocks : [StockObject] = []
+    var allDividends : [Dividend] = []
+    var allWatchListItems : [WatchListItem] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         preparations()
+    
+        // Make navigationbar transparent and add title
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationItem.title = "Portfolio"
         
-    }   
+        downloadUsersFromFirebase()
+        downloadStocksFromFirebase()
+        downloadDividendsFromFirebase()
+        downloadWatchListItemsFromFirebase()
+    }
+    
+    func downloadUsersFromFirebase() {
+        
+        allUser = []
+            
+            db.collection("users").getDocuments()
+            {
+                (querySnapshot,err) in
+                if let err = err
+                {
+                    print("Error getting documents: \(err)");
+                }
+                else
+                {
+                    for document in querySnapshot!.documents {
+                        let documentArray = document.data()
+                        let userObject = UserObject(uid: documentArray["uid"] as! String,
+                                                    username: documentArray["username"] as! String)
+                        self.allUser.append(userObject)
+                    }
+                    self.downloadStocksFromFirebase()
+                }
+            }
+    }
+    
+    func downloadStocksFromFirebase() {
+        
+        allStocks = []
+        
+        db.collection("stocks").getDocuments()
+        {
+            (querySnapshot,err) in
+            if let err = err
+            {
+                print("Error getting documents: \(err)");
+            }
+            else
+            {
+                for document in querySnapshot!.documents {
+                    let documentArray = document.data()
+                    let userObject = StockObject(symbol: documentArray["symbol"] as! String,
+                                                 companyName: documentArray["companyName"] as! String,
+                                                 sector: documentArray["sector"] as! String,
+                                                 amount: documentArray["amount"] as! Double,
+                                                 price: documentArray["price"] as! Double,
+                                                 fees: documentArray["fees"] as! Double,
+                                                 taxes: documentArray["taxes"] as! Double,
+                                                 date: (documentArray["date"] as! Timestamp).dateValue(),
+                                                 totalPrice: documentArray["totalPrice"] as! Double,
+                                                 uid: documentArray["uid"] as! String)
+                    self.allStocks.append(userObject)
+                }
+            }
+        }
+    }
+    
+    func downloadDividendsFromFirebase() {
+        allDividends = []
+        
+        db.collection("dividends").getDocuments()
+        {
+            (querySnapshot,err) in
+            if let err = err
+            {
+                print("Error getting documents: \(err)");
+            }
+            else
+            {
+                for document in querySnapshot!.documents {
+                    let documentArray = document.data()
+                    let dividendObject = Dividend(companyName: documentArray["companyName"] as! String,
+                                                 dividend: documentArray["dividend"] as! Double,
+                                                 fees: documentArray["fees"] as! Double,
+                                                 taxes: documentArray["taxes"] as! Double,
+                                                 date: (documentArray["date"] as! Timestamp).dateValue(),
+                                                 totalPrice: documentArray["totalPrice"] as! Double,
+                                                 uid: documentArray["uid"] as! String)
+                    self.allDividends.append(dividendObject)
+                }
+            }
+        }
+        
+    }
+    
+    func downloadWatchListItemsFromFirebase() {
+        
+        allWatchListItems = []
+        
+        db.collection("watchListItems").getDocuments()
+        {
+            (querySnapshot,err) in
+            if let err = err
+            {
+                print("Error getting documents: \(err)");
+            }
+            else
+            {
+                for document in querySnapshot!.documents {
+                    let documentArray = document.data()
+                    let watchListObject = WatchListItem(companyName: documentArray["companyName"] as! String,
+                                                   symbol: documentArray["symbol"] as! String,
+                                                   savedPrice: documentArray["savedPrice"] as! Double,
+                                                   currentPrice: documentArray["currentPrice"] as! Double,
+                                                   date: (documentArray["date"] as! Timestamp).dateValue(),
+                                                   desiredPrice: documentArray["desiredPrice"] as! Double,
+                                                   uid: documentArray["uid"] as! String)
+                    self.allWatchListItems.append(watchListObject)
+                }
+            }
+        }
+        
+    }
         
     // Set text on Labels
     func preparations() {
@@ -52,22 +186,23 @@ class ViewController: UIViewController {
         watchListLabel.text = "Watchlist"
 
         settingsLabel.text = "News"
-
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        // Make navigationbar transparent and add title
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationItem.title = "Portfolio"
+        
     }
     
     @IBAction func portfolioClicked(_ sender: UIButton) {
-        self.navigationController?.pushViewController(Portfolio(), animated: true)
+        let portfolioVC = Portfolio()
+        portfolioVC.allStocks = []
+        portfolioVC.allStocks = allStocks
+        print(allStocks)
+        self.navigationController?.pushViewController(portfolioVC, animated: true)
     }
     
     @IBAction func assetsClicked(_ sender: UIButton) {
-        self.navigationController?.pushViewController(Assets(), animated: true)
+        let assetsVC = Assets()
+        //(assetsVC.viewControllers?.first as? StockAssets)?.allStocks = allStocks
+        assetsVC.allStocks = []
+        assetsVC.allStocks = allStocks
+        self.navigationController?.pushViewController(assetsVC, animated: true)
     }
     
     @IBAction func performanceClicked(_ sender: UIButton) {
@@ -75,11 +210,17 @@ class ViewController: UIViewController {
     }
     
     @IBAction func dividendsClicked(_ sender: UIButton) {
-        self.navigationController?.pushViewController(Dividends(), animated: true)
+        let dividendsVC = Dividends()
+        dividendsVC.allDividends = []
+        dividendsVC.allDividends = allDividends
+        self.navigationController?.pushViewController(dividendsVC, animated: true)
     }
     
     @IBAction func newsClicked(_ sender: UIButton) {
-        self.navigationController?.pushViewController(WatchList(), animated: true)
+        let watchListVC = WatchList()
+        watchListVC.allWatchListItems = []
+        watchListVC.allWatchListItems = allWatchListItems
+        self.navigationController?.pushViewController(watchListVC, animated: true)
     }
     
     @IBAction func settingsClicked(_ sender: UIButton) {
@@ -88,6 +229,12 @@ class ViewController: UIViewController {
     
     @IBAction func addButtonClicked(_ sender: UIBarButtonItem) {
         self.navigationController?.pushViewController(AddValue(), animated: true)
+    }
+    @IBAction func logoutButtonClicked(_ sender: UIBarButtonItem) {
+        let startVC = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "StartNavVC") as? StartNavController
+               
+        view.window?.rootViewController = startVC
+        view.window?.makeKeyAndVisible()
     }
     
 }

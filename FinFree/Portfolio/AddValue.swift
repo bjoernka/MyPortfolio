@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseCore
+import FirebaseFirestore
 
 class AddValue: UITableViewController {
 
@@ -27,6 +30,8 @@ class AddValue: UITableViewController {
     let userDefaults = UserDefaults.standard
     var placeHolderValues: [Double] = []
     var token = Token()
+    
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,20 +127,26 @@ class AddValue: UITableViewController {
                           taxes: taxes,
                           date: date,
                           totalPrice: totalPrice)
-        
-        let name = symbol + "Portfolio"
-        
-        var encodedData = Data()
-        do {
-            encodedData = try NSKeyedArchiver.archivedData(withRootObject: stock, requiringSecureCoding: false)
-        }
-            catch {
-            print("ERROR! " + "\(error)")
-        }
             
-        helpFunc.saveData(data: encodedData, atKey: name, atArray: "portfolioValues")
-
-        // let add-view disappear
+        let annotationRef = db.collection("stocks")
+        annotationRef.addDocument(data: [
+            "symbol" : stock.symbol,
+            "companyName" : stock.companyName,
+            "sector" : stock.sector,
+            "amount" : stock.amount,
+            "price" : stock.price,
+            "fees" : stock.fees,
+            "taxes" : stock.taxes,
+            "date" : stock.date,
+            "totalPrice" : stock.totalPrice,
+            "uid:" : UserIdent.userUID
+        ]) { err in
+            if let err = err {
+                print("Error wrting document: \(err)")
+            } else {
+                print("Document succesfully written")
+            }
+        }
         helpFunc.letViewDisappear(navController: self.navigationController)
         } else {
             

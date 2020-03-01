@@ -16,14 +16,16 @@ class Dividend: NSObject, NSCoding {
     var taxes: Double = 0
     var date: Date = Date()
     var totalPrice: Double = 0
+    var uid: String = ""
     
-    init(companyName: String, dividend: Double, fees: Double, taxes: Double, date: Date, totalPrice: Double) {
+    init(companyName: String, dividend: Double, fees: Double, taxes: Double, date: Date, totalPrice: Double, uid:String) {
         self.companyName = companyName
         self.dividend = dividend
         self.fees = fees
         self.taxes = taxes
         self.date = date
         self.totalPrice = totalPrice
+        self.uid = uid
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -33,7 +35,8 @@ class Dividend: NSObject, NSCoding {
         let taxes = aDecoder.decodeDouble(forKey: "taxes")
         let date = aDecoder.decodeObject(forKey: "date") as! Date
         let totalPrice = aDecoder.decodeDouble(forKey: "totalPrice")
-        self.init(companyName: companyName, dividend: dividend, fees: fees, taxes: taxes, date: date, totalPrice: totalPrice)
+        let uid = aDecoder.decodeObject(forKey: "uid") as! String
+        self.init(companyName: companyName, dividend: dividend, fees: fees, taxes: taxes, date: date, totalPrice: totalPrice, uid: uid)
     }
     
     func encode(with aCoder: NSCoder) {

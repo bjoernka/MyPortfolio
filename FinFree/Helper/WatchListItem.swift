@@ -16,15 +16,16 @@ class WatchListItem: NSObject, NSCoding {
     var currentPrice: Double = 0
     var date: Date = Date()
     var desiredPrice: Double = 0
+    var uid: String = ""
     
-    init(companyName: String, symbol: String, savedPrice: Double, currentPrice: Double, date: Date, desiredPrice: Double) {
+    init(companyName: String, symbol: String, savedPrice: Double, currentPrice: Double, date: Date, desiredPrice: Double, uid: String) {
         self.companyName = companyName
         self.symbol = symbol
         self.savedPrice = savedPrice
         self.currentPrice = currentPrice
         self.date = date
         self.desiredPrice = desiredPrice
-        
+        self.uid = uid
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -34,7 +35,8 @@ class WatchListItem: NSObject, NSCoding {
         let currentPrice = aDecoder.decodeDouble(forKey: "currentPrice")
         let date = aDecoder.decodeObject(forKey: "date") as! Date
         let desiredPrice = aDecoder.decodeDouble(forKey: "desiredPrice")
-        self.init(companyName: companyName, symbol: symbol, savedPrice: savedPrice, currentPrice: currentPrice, date: date, desiredPrice: desiredPrice)
+        let uid = aDecoder.decodeObject(forKey: "uid") as! String
+        self.init(companyName: companyName, symbol: symbol, savedPrice: savedPrice, currentPrice: currentPrice, date: date, desiredPrice: desiredPrice, uid: uid)
     }
     
     func encode(with aCoder: NSCoder) {

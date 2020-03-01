@@ -15,6 +15,7 @@ class WatchList: UITableViewController {
     var watchListStocksSymbols: [String] = []
     var watchListStocksDefault: [String]? = nil
     let helpFunc = HelpFunctions()
+    var allWatchListItems: [WatchListItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,22 +35,11 @@ class WatchList: UITableViewController {
         watchListStocksNames = []
         watchListStocksSymbols = []
         
-        let defaults = UserDefaults.standard
-        watchListStocksDefault = defaults.stringArray(forKey: "watchListValues")
-        if (watchListStocksDefault != nil) {
-            watchListStocks = defaults.stringArray(forKey: "watchListValues")!
-            for watchListStock in watchListStocks {
-                let decoded  = defaults.data(forKey: watchListStock)
-                let decodedStock = helpFunc.decodeWatchListObject(fromData: decoded!)
-                //let decodedStock = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! WatchListItem
-                print(decodedStock!.companyName)
-                watchListStocksNames.append(decodedStock!.companyName)
-                watchListStocksSymbols.append(decodedStock!.symbol)
-            }
-        } else {
-            watchListStocksNames = ["No saved stocks"]
+        for watchListItem in allWatchListItems {
+            watchListStocksNames.append(watchListItem.companyName)
+            watchListStocksSymbols.append(watchListItem.symbol)
         }
-        
+  
         tableView.reloadData()
     }
     
@@ -58,7 +48,7 @@ class WatchList: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if watchListStocksDefault != nil {
+        if allWatchListItems.count > 0 {
             let cell = UITableViewCell()
             cell.textLabel?.text = watchListStocksNames[indexPath.row]
             cell.accessoryType = .disclosureIndicator
@@ -82,11 +72,14 @@ class WatchList: UITableViewController {
         } else {
             
         }
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return watchListStocksNames.count
+        if allWatchListItems.count > 0 {
+            return allWatchListItems.count
+        } else {
+            return 1
+        }
     }
     
     // Gets called everytime the user wants too add a stock

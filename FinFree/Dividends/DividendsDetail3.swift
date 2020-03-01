@@ -22,19 +22,19 @@ class DividendsDetail3: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        dividendNameArray = userDefaults.stringArray(forKey: "dividendArrayNew")
-        if dividendNameArray == nil {
-            dividendNameArray = ["No saved Data"]
-        } else {
-            for divName in dividendNameArray! {
-                let decoded  = userDefaults.data(forKey: divName)
-                if decoded != nil {
-                    let decodedDividend = helpFunc.decodeDividendObject(fromData: decoded!)
-                    //let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
-                    allDividends.append(decodedDividend!)
-                }
-            }
-        }
+//        dividendNameArray = userDefaults.stringArray(forKey: "dividendArrayNew")
+//        if dividendNameArray == nil {
+//            dividendNameArray = ["No saved Data"]
+//        } else {
+//            for divName in dividendNameArray! {
+//                let decoded  = userDefaults.data(forKey: divName)
+//                if decoded != nil {
+//                    let decodedDividend = helpFunc.decodeDividendObject(fromData: decoded!)
+//                    //let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
+//                    allDividends.append(decodedDividend!)
+//                }
+//            }
+//        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -42,7 +42,11 @@ class DividendsDetail3: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dividendNameArray!.count
+        if allDividends.count > 0 {
+            return allDividends.count
+        } else {
+            return 1
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

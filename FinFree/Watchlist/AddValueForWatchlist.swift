@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseCore
+import FirebaseFirestore
 
 class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
     
@@ -30,6 +33,7 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
     var dateTextField = UITextField()
     var helperFunc = HelpFunctions()
     var token = Token()
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,21 +111,25 @@ class AddValueForWatchlist: UITableViewController, UITextFieldDelegate {
                                           savedPrice: currentPrice,
                                           currentPrice: currentPrice,
                                           date: date,
-                                          desiredPrice: desiredPrice)
+                                          desiredPrice: desiredPrice,
+                                          uid: UserIdent.userUID)
         
-        let name = symbol + "watchList"
-        
-        var encodedData = Data()
-        do {
-            encodedData = try NSKeyedArchiver.archivedData(withRootObject: watchListItem, requiringSecureCoding: false)
-        }
-        catch {
-            print("ERROR! " + "\(error)")
-        }
-            
-        helperFunc.saveData(data: encodedData, atKey: name, atArray: "watchListValues")
-        
-        // let add-view disappear
+        let annotationRef = db.collection("watchListItems")
+            annotationRef.addDocument(data: [
+                "companyName" : watchListItem.companyName,
+                "symbol" : watchListItem.symbol,
+                "savedPrice" : watchListItem.savedPrice,
+                "currentPrice" : watchListItem.currentPrice,
+                "date" : watchListItem.date,
+                "desiredPrice" : watchListItem.desiredPrice,
+                "uid" : watchListItem.uid
+            ]) { err in
+                if let err = err {
+                    print("Error wrting document: \(err)")
+                } else {
+                    print("Document succesfully written")
+                }
+            }
             helperFunc.letViewDisappear(navController: self.navigationController)
         } else {
             

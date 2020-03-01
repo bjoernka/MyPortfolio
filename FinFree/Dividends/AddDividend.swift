@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseCore
+import FirebaseFirestore
 
 class AddDividend: UITableViewController {
     
@@ -23,6 +26,7 @@ class AddDividend: UITableViewController {
     var savingSuccesful = false
     var helperFunc = HelpFunctions()
     let datePicker = UIDatePicker()
+    let db = Firestore.firestore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +51,8 @@ class AddDividend: UITableViewController {
     
     @objc func onSaved (_ sender : AnyObject?){
         
-        // save Data
-        saveData()
+        // check Data
+        checkData()
         
         if savingSuccesful == true {
             
@@ -57,23 +61,26 @@ class AddDividend: UITableViewController {
                                           fees: fees,
                                           taxes: taxes,
                                           date: date,
-                                          totalPrice: totalPrice)
+                                          totalPrice: totalPrice,
+                                          uid: UserIdent.userUID)
             
-            let date = Date()
-            
-            savingName = companyName + "@" + "\(date)"
-            
-            var encodedData = Data()
-            do {
-                encodedData = try NSKeyedArchiver.archivedData(withRootObject: dividendObject, requiringSecureCoding: false)
+           
+            let annotationRef = db.collection("dividends")
+            annotationRef.addDocument(data: [
+                "companyName" : dividendObject.companyName,
+                "dividend" : dividendObject.dividend,
+                "fees" : dividendObject.fees,
+                "taxes" : dividendObject.taxes,
+                "date" : dividendObject.date,
+                "totalPrice" : dividendObject.totalPrice,
+                "uid" : dividendObject.uid
+            ]) { err in
+                if let err = err {
+                    print("Error wrting document: \(err)")
+                } else {
+                    print("Document succesfully written")
+                }
             }
-            catch {
-                print("ERROR! " + "\(error)")
-            }
-            
-            helperFunc.saveData(data: encodedData, atKey: savingName, atArray: "dividendArrayNew")
-            
-            // let add-view disappear
             helperFunc.letViewDisappear(navController: self.navigationController)
         } else {
             
@@ -129,7 +136,7 @@ class AddDividend: UITableViewController {
         self.view.endEditing(true)
     }
     
-    func saveData() {
+    func checkData() {
         
         if let firstCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextFieldCell {
             companyName = firstCell.textFieldCell.text!

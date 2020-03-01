@@ -20,6 +20,7 @@ class DividendsDetail2: UIViewController {
     var companyNames: [String] = []
     var namesAndPrices: [String: Double] = [:]
     var helperFunc = HelpFunctions()
+    var allDividends: [Dividend] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()

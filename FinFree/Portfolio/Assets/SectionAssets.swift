@@ -19,10 +19,14 @@ class SectionAssets: UIViewController {
     var namesAndPrices: [String: Double] = [:]
     var helperFunc = HelpFunctions()
     var pieChartView = PieChartView()
+    var allStocks: [StockObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         setupView()
         
         getStocks()
@@ -43,22 +47,19 @@ class SectionAssets: UIViewController {
     }
     
     func getStocks() {
+        totalPrices = []
+        sectorNames = []
         
-        stockNameArray = defaults.stringArray(forKey: "portfolioValues")
-        if stockNameArray != nil {
-            for stock in stockNameArray! {
-                let decoded  = defaults.data(forKey: stock)
-                if decoded != nil {
-                    let decodedStock = helperFunc.decodeStockObject(fromData: decoded!)
-                    totalPrices.append(decodedStock!.totalPrice)
-                    sectorNames.append(decodedStock!.sector)
-                }
+        if allStocks != nil {
+            for stocks in allStocks {
+                totalPrices.append(stocks.totalPrice)
+                sectorNames.append(stocks.sector)
             }
         }
-        
     }
     
     func setupPieCharts() {
+        chartDataEntries = []
         
         namesAndPrices = helperFunc.turnArraysIntoDictionaries(stringArray: sectorNames, doubleArray: totalPrices)
         

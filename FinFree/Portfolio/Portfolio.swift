@@ -14,9 +14,12 @@ class Portfolio: UITableViewController {
     // Array for names that need to show up in the tableview
     var namesForTableView : [String]? = ["No saved values."]
     var helpFunctions = HelpFunctions()
+    var allStocks: [StockObject] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(allStocks)
         
         // delete unnecessary rows
         tableView.tableFooterView = UIView()
@@ -27,14 +30,8 @@ class Portfolio: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        
-        // Get Names for tableView from defaults
-        namesForTableView = defaults.stringArray(forKey: "portfolioValues")
-        if namesForTableView == nil {
-            namesForTableView = ["No saved values."]
-        }
-        
         self.tableView.reloadData()
     }
     
@@ -43,20 +40,22 @@ class Portfolio: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return namesForTableView!.count
+        if allStocks.count > 0 {
+            return allStocks.count
+        } else {
+            return 1
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let stockName = namesForTableView![indexPath.row]
         
         // get Stockobject from default 
-        if let decoded  = defaults.data(forKey: stockName) {
-            let decodedStock = helpFunctions.decodeStockObject(fromData: decoded)
-            cell.textLabel?.text = decodedStock!.companyName
+        if allStocks.count > 0 {
+            cell.textLabel?.text = allStocks[indexPath.row].companyName
             cell.accessoryType = .disclosureIndicator
         } else {
-            cell.textLabel?.text = namesForTableView![indexPath.row]
+            cell.textLabel?.text = "No saved values"
         }
         return cell
     }
@@ -84,8 +83,7 @@ class Portfolio: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailStock()
         vc.title = tableView.cellForRow(at: indexPath)?.textLabel?.text
-        vc.companyName = (tableView.cellForRow(at: indexPath)?.textLabel?.text)!
-        vc.pickedStock = namesForTableView![indexPath.row]
+        vc.stockObject = allStocks[indexPath.row]
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

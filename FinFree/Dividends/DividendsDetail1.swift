@@ -94,31 +94,24 @@ class DividendsDetail1: UIViewController {
         keysAsArray = []
         counter = 0
         
-        for divName in divArry {
-            let decoded  = userDefaults.data(forKey: divName)
-            if decoded != nil {
-                let decodedDividend = helperFunc.decodeDividendObject(fromData: decoded!)
-                //let decodedDividend = NSKeyedUnarchiver.unarchiveObject(with: decoded!) as! Dividend
-                allDividends.append(decodedDividend!)
-            }
-        }
+        //for divName in divArry {
+        //    let decoded  = userDefaults.data(forKey: divName)
+        //    if decoded != nil {
+        //        let decodedDividend = helperFunc.decodeDividendObject(fromData: decoded!)
+        //        allDividends.append(decodedDividend!)
+        //    }
+        //}
         
-        for oneDividend in allDividends {
+        for dividend in allDividends {
             let calendar = NSCalendar.current
-            let month = calendar.component(.month, from: oneDividend.date)
-            let year = calendar.component(.year, from: oneDividend.date)
+            let month = calendar.component(.month, from: dividend.date)
+            let year = calendar.component(.year, from: dividend.date)
             allDivDates.append("\(year)" + "-" + "\(month)" + "-" + "01")
-            allDivNames.append(oneDividend.companyName)
-            allDivValues.append(oneDividend.totalPrice)
+            allDivNames.append(dividend.companyName)
+            allDivValues.append(dividend.totalPrice)
         }
  
         DatesAndValues = helperFunc.turnArraysIntoDictionaries(stringArray: allDivDates, doubleArray: allDivValues)
-        
-        print(DatesAndValues)
-        
-        print(allDivDates)
-        print(allDivNames)
-        print(allDivValues)
         
         let keys = DatesAndValues.keys
         for key in keys {
